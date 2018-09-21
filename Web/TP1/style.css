@@ -1,0 +1,144 @@
+table{
+  border-collapse: 1px;
+}
+/*On place le caption et on le met en gras*/
+caption{
+  caption-side: bottom;
+  font-weight: bold;
+}
+/*On enlève les bords des cellules vides*/
+th:empty,td:empty{
+  border: none;
+}
+/*propriétés communes à toutes les cellules du tableau*/
+th,td{
+  border-color: blue;
+  border-style: solid;
+  border-width: 1px;
+  vertical-align: middle;
+  height: 2.4em;
+}
+/*propriétés pour les cellules de titre du tableau non vides*/
+th:not(:empty){
+  border-radius: 0.5em;
+  background-color: rgb(79,129,189);
+  color: white;
+  border-style: outset;
+  border-width: 2px;
+  border-color: rgb(59,97,142);
+  box-shadow: 1px 1px 0px black;
+}
+
+/*propriétés pour les cellules de titre du corps du tableau*/
+tbody th{
+  vertical-align: top;
+}
+/*propriétés pour les cellules de données non-vides du corps du tableau*/
+/*Cas général*/
+td:not(:empty){
+  text-align: center;
+  min-width: 10em;
+  border-radius: 0.5em;
+  color: white;
+  border-style: outset;
+  border-width: 2px;
+  box-shadow: 1px 1px 0px black;
+}
+/*Cas des liens*/
+a{
+  color: white;
+  text-decoration: none;
+}
+/* BAC + 8 */
+tbody tr:nth-child(2) td:not(:empty){
+  background-color: rgb(128,100,162);
+  border-color: rgb(94,73,121);
+}
+
+/* BAC + 5 */
+tbody tr:nth-child(5) td:not(:empty){
+  background-color: rgb(155,187,89);
+  border-color: rgb(147,178,184);
+}
+/* BAC + 3 */
+tbody tr:nth-child(6) ~ tr td:not(:empty){
+  background-color: rgb(59,129,189);
+  border-color: rgb(57,97,142);
+}
+
+/*propriétés pour les cellules de données vides du corps du tableau*/
+td:empty{
+  border-top: none;
+  border-right-color: black;
+  border-bottom-color: black;
+  border-left-color: black;
+  border-right-style: dashed;
+  border-bottom-style: dashed;
+  border-left-style: dashed;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+
+/*propriétés pour les cellules de données vides de la première ligne
+du corps du tableau*/
+tbody tr:first-child td{
+  border-top-color: black;
+  border-top-style: dashed;
+  border-top-width: 1px;
+}
+/*On enlève le bord gauche pour les cellules de données vides de la première ligne
+sauf la première cellule de données vide de la ligne*/
+tbody tr:first-child td:not(:first-of-type){
+  border-left: none;
+}
+
+/* utilisation de la classe pour rendre la cellule "DU IG" 50% transparente*/
+.duig{
+  opacity: 0.5;
+}
+
+#miage{
+  border-right: none;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius:0px;
+  box-shadow: 10px 1px 0px rgb(59,129,189);
+}
+
+#licence{
+  border-left: none;
+  border-top-left-radius: 0px;
+}
+img{
+  position: absolute;
+  left: 400px;
+  animation-name:movearound;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes movearound{
+  from{
+    bottom: 330px;
+  }
+
+  12%{
+    bottom:310px;
+  }
+  20%{
+    left:230px;
+  }
+
+  50%{
+    bottom:360px;
+  }
+
+  60%{
+    left:400px;
+  }
+
+  to{
+    bottom:330px;
+  }
+
+}
