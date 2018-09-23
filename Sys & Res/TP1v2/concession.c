@@ -8,7 +8,7 @@
 #define TEMPS_MOY_ENTRE_APPRO 4
 
 void *activite_concession(void *pdata){
-  /* vente de voitures en continu toutes les 5 secondes */
+  /* déclaration du stock local de chaque concession */
   int stockLocal = 0;
   dataConcession *p = (dataConcession*)(pdata);
   /*On approvisionne le stock local de la concession à la création de celle-ci*/
@@ -21,7 +21,7 @@ void *activite_concession(void *pdata){
     }
     sleep(TEMPS_MOY_ENTRE_APPRO);
   }
-  /* On commence la vente et le réapprovisionnement */
+  /* On commence la vente et le réapprovisionnement toutes les 5s */
   while(1){
     /* Vente */
     if(stockLocal > 0)
