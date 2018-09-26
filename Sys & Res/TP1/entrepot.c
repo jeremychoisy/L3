@@ -13,7 +13,6 @@ void *activite_entrepot(void *pdata){
   /* Affichage de l'inventaire de l'entrepot*/
   dataUE *pdataE = (dataUE *)(pdata);
   while(1){
-    printf("Entrepot demande mutex");
     pthread_mutex_lock(pdataE->pmutex);
     printf("Entrepot :\t");
     printf("Stock actuel : %d.\n",*(pdataE->pstock));

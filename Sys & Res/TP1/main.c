@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include "struct.h"
 /* déclaration static du mutex */
-static pthread_mutex_t pmutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 
 #define NB_CONCESSION 3
@@ -19,14 +19,15 @@ int main(int argc, char*argv[]){
   /* modèle usine */
   pthread_t usine;
   dataUE *pdataU = malloc(sizeof(dataUE));
-  pdataU->pmutex = pmutex;
+  pdataU->pmutex = &mutex;
   pdataU->pstock = &stock;
 
   /* modèle entrepot */
   pthread_t entrepot;
   dataUE *pdataE = malloc(sizeof(dataUE));
-  pdataE->pmutex = pmutex;
+  pdataE->pmutex = &mutex;
   pdataE->pstock = &stock;
+
   /* modèle concession */
   pthread_t concession[NB_CONCESSION];
   dataConcession *pdataC = NULL;
@@ -34,12 +35,10 @@ int main(int argc, char*argv[]){
   /* création thread usine */
   r = creation_usine(&usine,pdataU);
   /* vérification de la réussite de la création du thread*/
-  printf("creation_usine");
   if (r != 0)
     fprintf(stderr,"Usine echec !");
   /* création thread entrepot */
   r = creation_entrepot(&entrepot, pdataE);
-    printf("creation_entrepot");
   /* vérification de la réussite de la création du thread*/
   if (r != 0)
     fprintf(stderr,"Entrepot echec !");
@@ -58,7 +57,6 @@ int main(int argc, char*argv[]){
     if(stock>i)
     {
       r = creation_concession(&(concession[i]),pdataC);
-      printf("creation_entrepot");
       /* vérification de la réussite de la création du thread*/
       if (r != 0)
         fprintf(stderr,"Concession echec !");

@@ -11,12 +11,10 @@ void *activite_usine(void *pdata){
   /* production de voitures en continu toutes les 1 secondes */
   dataUE *pdataU = (dataUE *)(pdata);
   while(1){
-    printf("Usine demande mutex");
     pthread_mutex_lock(pdataU->pmutex);
-    printf("Usine obtient mutex");
     printf("Usine : \t");
     if(*(pdataU->pstock)<capacite_max_entrepot()){
-      *(pdataU->pstock) ++;
+      *(pdataU->pstock) += 1;
       printf("Production d'une voiture.\n");
     }else{
       printf("Pas de production d'une voiture.\n");

@@ -7,6 +7,6 @@ typedef struct{
 }dataConcession;
 
 typedef struct{
-  pthread_mutex_t pmutex;
+  pthread_mutex_t *pmutex;
   int * pstock;
 }dataUE;
