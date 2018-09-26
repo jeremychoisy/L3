@@ -99,6 +99,7 @@ tbody tr:first-child td:not(:first-of-type){
 }
 
 #miage{
+  position: relative;
   border-right: none;
   border-top-right-radius: 0px;
   border-bottom-right-radius:0px;
@@ -109,36 +110,51 @@ tbody tr:first-child td:not(:first-of-type){
   border-left: none;
   border-top-left-radius: 0px;
 }
+
+/* On place l'image et on lui attribue l'animation */
 img{
   position: absolute;
-  left: 400px;
-  animation-name:movearound;
-  animation-duration: 5s;
+  height: 30px;
+  width: 30px;
+  animation-name :movearound;
+  animation-duration: 3s;
   animation-iteration-count: infinite;
 }
-
+/* On configure l'animation */
 @keyframes movearound{
-  from{
-    bottom: 330px;
+  from  {
+    top: -15px;
+    bottom: 30px;
+    right: -15px;
+    left: 150px;
   }
 
-  12%{
-    bottom:310px;
-  }
-  20%{
-    left:230px;
-  }
-
-  50%{
-    bottom:360px;
+  25%  {
+    top: 30px;
+    bottom: -15px;
+    right: -15px;
+    left: 150px;
   }
 
-  60%{
-    left:400px;
+  50%  {
+    top: 30px;
+    bottom: -15px;
+    right: 150px;
+    left: -15px;
   }
 
-  to{
-    bottom:330px;
+  75%  {
+    top: -15px;
+    bottom: 30px;
+    right: 150px;
+    left: -15px;
+  }
+
+  to {
+    top: -15px;
+    bottom: 30px;
+    right: -15px;
+    left: 150px;
   }
 
 }
