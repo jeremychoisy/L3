@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include  <sys/types.h>
 
-#define   MAX_COUNT  100
+#define   MAX_COUNT  110
 #define   BUF_SIZE   50
 
 int main(void){
