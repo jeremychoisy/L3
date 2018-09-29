@@ -9,10 +9,16 @@ processus fils . */
 #include <stdlib.h>
 #include <stdio.h>
 
+#define NB_PROCESSUS 3
 int main (int argc , char * argv []) {
   int exit_cond ;
   pid_t pid;
-  pid = fork () ;
+  for(int i=0;i<{NB_PROCESSUS;i++)
+  {
+    pid = fork () ;
+    if(pid==0)
+      break;
+  }
   switch (pid)
   {
     case -1 : perror (" Erreur de création du processus ");
@@ -26,10 +32,11 @@ int main (int argc , char * argv []) {
       printf (" Attente de la terminaison du fils ...\n");
       pid = wait (& exit_cond );
       if ( WIFEXITED ( exit_cond ))
-      printf (" Le fils %d s ’ est termine correctement : %d\n " ,
-      pid , WEXITSTATUS ( exit_cond ));
+        printf (" Le fils %d s ’ est termine correctement : %d\n " ,
+        pid , WEXITSTATUS ( exit_cond ));
       else
-      printf (" Le fils %d s ’ est mal termine : %d\n" , pid , WTERMSIG ( exit_cond ));
+        printf (" Le fils %d s ’ est mal termine : %d\n" , pid , WTERMSIG ( exit_cond ));
+      sleep(5);
   } /* switch */
 exit (0) ; /* exécuté par le fils et le père */
 }
