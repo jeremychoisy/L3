@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <?php
+  session_name("Jeremy");
+  session_start();
+
   $date = date("j F y");
   $heure = date("H\h i\m s\s");
   $chaine_date="Nous sommes le $date, il est $heure.";
@@ -37,10 +40,10 @@
   ];
 ?>
 <html>
-  <head>
-    <title> Date en php </title>
-    <meta charset="utf-8">
-  </head>
+<?php
+  include("./entetes.inc");
+  load_head("Date en php");
+?>
   <body>
     <?php
       echo $chaine_date;
