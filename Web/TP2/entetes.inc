@@ -1,13 +1,18 @@
 <?php
   function load_head($title){
-    echo '<head>
+    include("./bandeau.inc");
+    $bandeau = new Bandeau();
+    $headers = '<head>
           <title>'.$title.'</title>
-      <meta charset="'."utf-8".'">';
+      <meta charset="'."utf-8".'">
+      <link rel="stylesheet" href="./nav/nav.css">';
         if(isset($_SESSION["stylesheet"]))
         {
-          echo '<link rel="stylesheet" href="'.$_SESSION["stylesheet"].'">';
+          $headers .= '<link rel="stylesheet" href="'.$_SESSION["stylesheet"].'">';
         }
 
-    echo "</head>";
+    $headers .= $bandeau->genereBarNav();
+    $headers .= "</head>";
+    return $headers;
   }
 ?>

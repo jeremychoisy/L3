@@ -11,7 +11,7 @@
 <html>
   <?php
     include("./entetes.inc");
-    load_head("Préférence en php");
+    echo load_head("Préférence en php");
   ?>
   <body>
     <form action="preference.php" method="post">

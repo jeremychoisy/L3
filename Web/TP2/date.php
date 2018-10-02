@@ -42,7 +42,7 @@
 <html>
 <?php
   include("./entetes.inc");
-  load_head("Date en php");
+  echo load_head("Date en php");
 ?>
   <body>
     <?php

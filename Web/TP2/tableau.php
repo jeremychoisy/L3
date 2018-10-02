@@ -5,12 +5,12 @@
 
 /*Initialisation des tableaux */
   $tab=[
-    "0"=> [
+    [
             "date.php",
             "01-10-2018",
             "1856"
                   ],
-    "1"=> [
+    [
             "tableau.php",
             "01-10-2018",
             "1875"
@@ -83,13 +83,13 @@
 <html>
 <?php
   include("./entetes.inc");
-  load_head("Tableau en php");
+  echo load_head("Tableau en php");
 ?>
   <body>
       <?php
       echo genere_tableau($titre,genere_listeFichier());
       ?>
-      <a href="http://webl3/TP2/tableau.php?sort=ascending"> Tri croissant </a></br>
-      <a href="http://webl3/TP2/tableau.php?sort=descending"> Tri décroissant </a>
+      <a href="./tableau.php?sort=ascending"> Tri croissant </a></br>
+      <a href="./tableau.php?sort=descending"> Tri décroissant </a>
   </body>
 </html>

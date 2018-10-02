@@ -1,0 +1,29 @@
+div.lien
+{
+  display:block;
+  float: left;
+  margin-right:2em;
+}
+
+div.lien:hover{
+  background-color: black;
+}
+
+div a{
+  text-decoration:none;
+  text-align:center;
+  color:white;
+}
+
+.lien .act{
+  color:red;
+}
+
+div.barrenavigation
+{
+  position : fixed;
+  top = 0;
+  height : 1.5em;
+  position : relative;
+  background-color:grey;
+}
