@@ -49,7 +49,6 @@ int sh_execute ( char ** args ) {
   char *str=malloc(sizeof(char)*strlen(args[0]));
   strcpy(str,"/bin/");
   execv(strcat(str,args[0]),args);
-  free(str);
 }
 
 /*======================================================*/
@@ -73,10 +72,10 @@ void sh_loop ( void ) {
     else
     {
       pid=wait(&exit_cond);
-      if ( WIFEXITED ( exit_cond ))
+      /*if ( WIFEXITED ( exit_cond ))
         printf (" Le fils %d s ’ est termine correctement : %d\n " , pid ,WEXITSTATUS ( exit_cond ));
     else
-        printf (" Le fils %d s ’ est mal termine : %d\n" , pid , WTERMSIG ( exit_cond ));
+        printf (" Le fils %d s ’ est mal termine : %d\n" , pid , WTERMSIG ( exit_cond ));*/
     }
 /* s h_ f r e e ( l i n e ) ; */
 /* s h_ f r e e ( a r g s ) ; */
