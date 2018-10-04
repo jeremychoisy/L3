@@ -13,7 +13,7 @@ processus fils . */
 int main (int argc , char * argv []) {
   int exit_cond ;
   pid_t pid;
-  for(int i=0;i<{NB_PROCESSUS;i++)
+  for(int i=0;i<NB_PROCESSUS;i++)
   {
     pid = fork () ;
     if(pid==0)
@@ -30,7 +30,7 @@ int main (int argc , char * argv []) {
     default : /* Ce code s’exécute chez le père */
       printf (" Pid du pere = %d\n" , getpid () );
       printf (" Attente de la terminaison du fils ...\n");
-      pid = wait (& exit_cond );
+      pid = wait (& exit_cond);
       if ( WIFEXITED ( exit_cond ))
         printf (" Le fils %d s ’ est termine correctement : %d\n " ,
         pid , WEXITSTATUS ( exit_cond ));

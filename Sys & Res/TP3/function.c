@@ -49,7 +49,7 @@ int sh_execute ( char ** args ) {
   char *str=malloc(sizeof(char)*strlen(args[0]));
   strcpy(str,"/bin/");
   execv(strcat(str,args[0]),args);
-  free(str);
+//  free(str);
 }
 
 /*======================================================*/
@@ -57,7 +57,7 @@ void sh_loop ( void ) {
   char *prompt = " l3miage ␣ shell ␣ >␣ " ;
   char *line ;
   char **args ;
-  int status ;
+  int status;
   pid_t pid;
   int exit_cond;
   do {
@@ -75,7 +75,7 @@ void sh_loop ( void ) {
       pid=wait(&exit_cond);
       if ( WIFEXITED ( exit_cond ))
         printf (" Le fils %d s ’ est termine correctement : %d\n " , pid ,WEXITSTATUS ( exit_cond ));
-    else
+      else
         printf (" Le fils %d s ’ est mal termine : %d\n" , pid , WTERMSIG ( exit_cond ));
     }
 /* s h_ f r e e ( l i n e ) ; */
