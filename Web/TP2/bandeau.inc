@@ -3,6 +3,10 @@
 class Bandeau{
   public static $map=[
         [
+          "index.php",
+          "Connexion"
+        ],
+        [
           "tableau.php",
           "Plan du site"
         ],
@@ -30,7 +34,7 @@ class Bandeau{
 
     public function genereBarNav(){
       $barrenav = '<div class="barrenavigation">';
-      for($i=0;$i<count(Bandeau::$map);$i++)
+      for($i=1;$i<count(Bandeau::$map);$i++)
       {
         $barrenav .= $this->genererLien(Bandeau::$map[$i][0],Bandeau::$map[$i][1]);
       }
