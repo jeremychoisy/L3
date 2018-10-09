@@ -27,3 +27,8 @@ div.barrenavigation
   position : relative;
   background-color:grey;
 }
+
+div.droite{
+  text-align: right;
+  color:white;
+}

@@ -1,35 +1,43 @@
 <!DOCTYPE html>
 <?php
-  if(isset($_POST["ok"]))
+  session_start();
+  if(isset($_POST["deconnexion"])){
+    session_destroy();
+  }
+  if(!isset($_SESSION['nom'])){
+    $_SESSION['nom']="";
+  }
+  else if($_SESSION['nom']=="")
   {
-    $succes = 0;
-    $content=file("../users.csv",FILE_IGNORE_NEW_LINES);
-    if($_POST["nom"]!="" && $_POST["prenom"]!="" && $_POST["mdp"]!="" )
+    if(isset($_POST["connexion"]))
     {
-      for($i=0;$i<count($content);$i++){
-        $line=explode(";",$content[$i]);
-        if($_POST["nom"]==$line[0])
-        {
-          if($_POST["prenom"]==$line[1])
+      $content=file("../users.csv",FILE_IGNORE_NEW_LINES);
+      if($_POST["nom"]!="" && $_POST["prenom"]!="" && $_POST["mdp"]!="" )
+      {
+        for($i=0;$i<count($content);$i++){
+          $line=explode(";",$content[$i]);
+          if($_POST["nom"]==$line[0])
           {
-            if($_POST["mdp"]==$line[2])
+            if($_POST["prenom"]==$line[1])
             {
-              echo "Vous êtes maintenant connecté.";
-              $succes=1;
+              if($_POST["mdp"]==$line[2])
+              {
+                $_SESSION['nom']=$_POST["prenom"]." ".$_POST["nom"];
+              }
             }
           }
         }
+        if($_SESSION['nom']=="")
+        {
+          echo "Aucune correspondance trouvée.";
+        }
       }
-      if($succes=0)
+      else
       {
-      echo "Aucune correspondance trouvée.";
+        echo "Remplissez tous les champs.";
       }
     }
-    else
-    {
-      echo "Remplissez tous les champs.";
-    }
- }
+  }
 ?>
 <html>
   <?php
@@ -45,8 +53,14 @@
         <input type="text" name="prenom"></br>
         <label for="mdp">Mot de passe :</label></br>
         <input type="password" name="mdp"></br></br>
-        <input type="submit" value="Se connecter" name="ok">
+        <input type="submit" value="Se connecter" name="connexion">
       </p>
     </form>
+    <form action="index.php" method="post">
+      <p>
+        <input type="submit" value="Se Déconnecter" name="deconnexion">
+      </p>
+    </form>
+
   </body>
 </html>
