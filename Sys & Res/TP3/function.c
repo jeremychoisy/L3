@@ -146,34 +146,60 @@ int sh_execute ( char ** args, char ** forbiddens ) {
   }
 }
 
+void warning(int sig){
+  printf("warning\n");
+}
 /*======================================================*/
 void sh_loop ( void ) {
-  char *prompt = " l3miage  shell  >  " ;
+  char *prompt = "l3miage  shell  >  " ;
   char *line ;
   char **args ;
   char * f = malloc(sizeof(char)*BUFFSIZE);
   char **forbiddens;
   int status;
   pid_t pid;
+  struct sigaction action;
 
-  strcpy(f,getenv("FORBIDDEN"));
-  printf("Get FORBIDDEN variable(s) from env : %s\n",f);
+  if(getenv("FORBIDDEN")!=NULL)
+  {
+    strcpy(f,getenv("FORBIDDEN"));
+    printf("Get FORBIDDEN variable(s) from env : %s\n",f);
+  }
+  else
+  {
+    setenv("FORBIDDEN","",0);
+    printf("Initialisation de la variable d'environnement FORBIDDEN.\n ");
+  }
 
   do
   {
+    memset(&action,0,sizeof(action));
+    action.sa_handler = warning;
+    action.sa_flags=0;
+    sigemptyset(&action.sa_mask);
+    sigaction (SIGINT,&action,NULL);
+
     strcpy(f,getenv("FORBIDDEN"));
     forbiddens=sh_split_line ( f );
+
     printf ( "%s  " , prompt ) ;
     fflush ( stdout ) ;
+
     line = sh_read_line ( ) ;
     args = sh_split_line ( line ) ;
     // Cas du exit
+
     if(strcmp(args[0],"exit")==0)
     {
       exit(0);
     }
+
     pid=fork();
-    if(pid==0)
+    if(pid == -1)
+    {
+      printf("Erreur fork.\n");
+    }
+    else if(pid==0)
     {
       status = sh_execute ( args, forbiddens ) ;
     }
