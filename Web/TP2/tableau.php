@@ -87,6 +87,7 @@
 ?>
   <body>
       <?php
+      echo '</br>';
       echo genere_tableau($titre,genere_listeFichier());
       ?>
       <a href="./tableau.php?sort=ascending"> Tri croissant </a></br>

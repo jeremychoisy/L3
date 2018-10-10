@@ -46,10 +46,10 @@ char ** sh_split_line ( char * line ) {
 }
 
 /*======================================================*/
-#define BUFFSIZE 64
+#define BUFFSIZE 100
 
 int sh_execute ( char ** args, char ** forbiddens ) {
-  int i=1,j=0;
+  int i=1,j=0,execR=0;
   char * strbuff = malloc(sizeof(char)*BUFFSIZE);
   char * strEnv = malloc(sizeof(char)*BUFFSIZE);
 // cas du newf
@@ -139,26 +139,39 @@ int sh_execute ( char ** args, char ** forbiddens ) {
         i += 1;
         j= 0;
       }
-      char *str=malloc(sizeof(char)*(strlen("/bin/")));
-      strcpy(str,"/bin/");
-      execv(strcat(str,args[0]),args);
-      return 0;
+      execR=execvp(args[0],args);
+      if(execR!=0)
+      {
+        printf("l3miageshell: %s : commande introuvable.\n",args[0]);
+      }
   }
 }
 
-void warning(int sig){
-  printf("warning\n");
+/*======================================================*/
+void handlerSIGCHLD(int sig){
+/* Handler du signal SIGCHLD */
+  int exit_cond ;
+  pid_t pid;
+  pid =wait(&exit_cond);
+
+  if (!WIFEXITED(exit_cond))
+    printf (" Le fils %d s’est mal termine : %d\n" , pid , WTERMSIG ( exit_cond ));
 }
+
 /*======================================================*/
 void sh_loop ( void ) {
   char *prompt = "l3miage  shell  >  " ;
   char *line ;
   char **args ;
+
   char * f = malloc(sizeof(char)*BUFFSIZE);
   char **forbiddens;
-  int status;
+
+  int status = 0;
   pid_t pid;
+
   struct sigaction action;
+
 
   if(getenv("FORBIDDEN")!=NULL)
   {
@@ -173,43 +186,42 @@ void sh_loop ( void ) {
 
   do
   {
-    memset(&action,0,sizeof(action));
-    action.sa_handler = warning;
-    action.sa_flags=0;
-    sigemptyset(&action.sa_mask);
-    sigaction (SIGINT,&action,NULL);
-
     strcpy(f,getenv("FORBIDDEN"));
     forbiddens=sh_split_line ( f );
 
-    printf ( "%s  " , prompt ) ;
+    printf ( "%s" , prompt ) ;
     fflush ( stdout ) ;
 
     line = sh_read_line ( ) ;
     args = sh_split_line ( line ) ;
-    // Cas du exit
 
-    if(strcmp(args[0],"exit")==0)
+    if(args[0]!=NULL)
     {
-      exit(0);
-    }
-
-    pid=fork();
-    if(pid == -1)
-    {
-      printf("Erreur fork.\n");
-    }
-    else if(pid==0)
-    {
-      status = sh_execute ( args, forbiddens ) ;
-    }
-    else
-    {
-      pid=wait(&status);
-      if ( !WIFEXITED ( status ))
-        printf (" Le fils %d s ’ est mal termine : %d\n" , pid , WTERMSIG ( status ));
+      // Cas du exit
+      if(strcmp(args[0],"exit")==0)
+      {
+        exit(0);
+      }
+      pid=fork();
+      if(pid == -1)
+      {
+        printf("Erreur fork.\n");
+      }
+      else if(pid==0)
+      {
+        status = sh_execute ( args, forbiddens ) ;
+      }
+      else
+      {
+        memset(&action,0,sizeof(action));
+        action.sa_handler = handlerSIGCHLD;
+        action.sa_flags=0;
+        sigemptyset(&action.sa_mask);
+        sigaction (SIGCHLD,&action,NULL);
+        sleep(5);
+      }
     }
 /* s h_ f r e e ( l i n e ) ; */
 /* s h_ f r e e ( a r g s ) ; */
-  } while ( status == 0 ) ;
+} while ( status == 0 ) ;
 }

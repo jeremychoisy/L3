@@ -1,12 +1,18 @@
+html{
+  font-family:Arial;
+}
 div.lien
 {
   display:block;
   float: left;
-  margin-right:2em;
+  padding-right: 2em;
+  padding-bottom: 4px;
+  border:1px solid;
+  border-color:grey;
 }
 
 div.lien:hover{
-  background-color: black;
+  background-color: grey;
 }
 
 div a{
@@ -25,10 +31,13 @@ div.barrenavigation
   top = 0;
   height : 1.5em;
   position : relative;
-  background-color:grey;
+  background-color:black;
 }
 
 div.droite{
   text-align: right;
   color:white;
+  border:1px solid;
+  border-color:grey;
+  padding-bottom: 4px;
 }

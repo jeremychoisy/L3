@@ -60,11 +60,11 @@ class Bandeau{
       //$barrenav .= '</div>';
       if(isset($_SESSION['nom']) && $_SESSION['nom']!="")
       {
-        $barrenav .= '<div class="droite">Bienvenue '.$_SESSION['nom'].', nous somme le '.date("d/m/y").' et il est '.date("H\h i\m s\s").'.</div>';
+        $barrenav .= '<div class="droite">Bienvenue '.$_SESSION['nom'].', nous sommes le '.date("d/m/y").' et il est '.date("H\h i\m s\s").'.</div>';
       }
       else
       {
-        $barrenav .= '<div class="droite">Bienvenue cher visiteur, nous somme le '.date("d/m/y").' et il est '.date("H\h i\m s\s").'.</div>';
+        $barrenav .= '<div class="droite">Bienvenue cher visiteur, nous sommes le '.date("d/m/y").' et il est '.date("H\h i\m s\s").'.</div>';
       }
       $barrenav .= '</div>';
       return $barrenav;
