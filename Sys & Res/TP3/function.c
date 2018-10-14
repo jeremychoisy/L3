@@ -142,6 +142,7 @@ int sh_execute ( char ** args, char ** forbiddens ) {
       execR=execvp(args[0],args);
       if(execR!=0)
       {
+        printf("%d",errno);
         printf("l3miageshell: %s : commande introuvable.\n",args[0]);
       }
   }
