@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-  session_name("Jeremy");
   session_start();
 
   if(isset($_POST['select_style']))
@@ -11,7 +10,7 @@
 <html>
   <?php
     include("./entetes.inc");
-    echo load_head("Préférence en php");
+    echo load_head("Choix du style");
   ?>
   <body>
     <form action="preference.php" method="post">

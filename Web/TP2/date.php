@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-  session_name("Jeremy");
   session_start();
 
   $date = date("j F y");
@@ -42,7 +41,7 @@
 <html>
 <?php
   include("./entetes.inc");
-  echo load_head("Date en php");
+  echo load_head("Date");
 ?>
   <body>
     <?php

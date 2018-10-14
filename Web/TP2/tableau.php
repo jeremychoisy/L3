@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-  session_name("Jeremy");
   session_start();
 
 /*Initialisation des tableaux */
@@ -83,7 +82,7 @@
 <html>
 <?php
   include("./entetes.inc");
-  echo load_head("Tableau en php");
+  echo load_head("Plan du site");
 ?>
   <body>
       <?php
