@@ -14,7 +14,6 @@ if(isset($_POST["creation"]))
         $line=explode(";",$buffer);
         if($_POST["nom"]==$line[0])
         {
-          echo "nom";
           if($_POST["prenom"]==$line[1])
           {
             echo "Nom de compte déjà existant";

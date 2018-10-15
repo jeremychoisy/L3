@@ -10,7 +10,7 @@
             '<head>
             <title>'.$title.'</title>
             <meta charset="'."utf-8".'">
-            <link rel="stylesheet" href="./nav/nav.css" type="text/css">';
+            <link rel="stylesheet" href="./nav/navi.css" type="text/css">';
     if(isset($_SESSION["stylesheet"]))
     {
       $headers .= '<link rel="stylesheet" href="'.$_SESSION["stylesheet"].'">';

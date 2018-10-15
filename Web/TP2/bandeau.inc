@@ -47,7 +47,7 @@ class Bandeau{
       $filename = basename($_SERVER['PHP_SELF']);
       if($filename==$href)
       {
-        return '<div class="lien"><a class="act" href="'.$href.'">'.$name.'</a></div>';
+        return '<div class="lien"><a class="actif" href="'.$href.'">'.$name.'</a></div>';
       }
       else
       {
@@ -80,8 +80,11 @@ class Bandeau{
       {
         if($this->est_affichable(Bandeau::$map[$i][1]))
         {
-
-        $barrenav .= $this->genererLien(Bandeau::$map[$i][0],Bandeau::$map[$i][1]);
+          $barrenav .= $this->genererLien(Bandeau::$map[$i][0],Bandeau::$map[$i][1]);
+        }
+        else
+        {
+          $barrenav .= '<div class="lien" id="nolink">'.Bandeau::$map[$i][1].'</div>';
         }
       }
       if(isset($_SESSION['nom']) && $_SESSION['nom']!="")

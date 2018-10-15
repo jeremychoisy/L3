@@ -1,0 +1,50 @@
+html{
+  font-family:Arial;
+}
+
+
+div.barrenavigation
+{
+  position : fixed;
+  top = 0;
+  height : 1.5em;
+  position : relative;
+  background-color:black;
+}
+
+div.lien
+{
+  display:block;
+  float: left;
+  padding-right: 2em;
+  padding-bottom: 4px;
+  border:1px solid;
+  border-color:grey;
+  text-align:center;
+}
+
+div a{
+  text-decoration:none;
+  text-align:center;
+  color:white;
+}
+
+
+div a.actif{
+  color:red;
+}
+
+
+div.droite{
+  text-align: right;
+  color:white;
+  border:1px solid;
+  border-color:grey;
+  padding-bottom: 4px;
+}
+
+#nolink
+{
+  color:grey;
+  background-color:black;
+}
