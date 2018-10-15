@@ -1,5 +1,3 @@
-
-#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -61,7 +59,7 @@ int sh_execute ( char ** args, char ** forbiddens ) {
       {
         while(forbiddens[j]!=NULL)
         {
-          if(strcasecmp(args[i],forbiddens[j])==0)
+          if(strcmp(args[i],forbiddens[j])==0)
           {
             printf("Contrainte déjà présente dans la variable FORBIDDEN !\n");
             exit(0);
@@ -69,6 +67,7 @@ int sh_execute ( char ** args, char ** forbiddens ) {
           j += 1;
         }
         i += 1;
+        j=0;
       }
       i=1,j=0;
       /* On construit la liste des forbiddens sous la forme d'une chaîne de caractères
@@ -91,7 +90,7 @@ int sh_execute ( char ** args, char ** forbiddens ) {
       setenv("FORBIDDEN",strEnv,1);
     }
 // cas du rmf
-    else if(strcasecmp(args[0],"rmf")==0)
+    else if(strcmp(args[0],"rmf")==0)
     {
 // On construit une chaîne de caractère des forbiddens qu'on place dans strbuff.
         while(forbiddens[j]!=NULL)
@@ -106,7 +105,7 @@ int sh_execute ( char ** args, char ** forbiddens ) {
           /* Si on trouve l'argument dans la chaîne de caractère construit
           au préalable, on crée une nouvelle chaîne avec les éléments précédents
           et suivants celui-ci. */
-          if(strcasestr(strbuff,args[i])!=NULL)
+          if(strstr(strbuff,args[i])!=NULL)
           {
             strEnv = strncat(strEnv, strbuff, strstr(strbuff,args[i])-strbuff);
             strEnv = strncat(strEnv,strstr(strbuff,args[i])+strlen(args[i]) + 1, strlen(strbuff));
@@ -130,7 +129,7 @@ int sh_execute ( char ** args, char ** forbiddens ) {
       {
         while(forbiddens[j]!=NULL)
         {
-          if(strcasestr(args[i],forbiddens[j])!=NULL)
+          if(strstr(args[i],forbiddens[j])!=NULL)
           {
             printf("Travaille au lieu de jouer !\n");
             exit(0);
@@ -195,11 +194,10 @@ void sh_loop ( void ) {
 
     line = sh_read_line ( ) ;
     args = sh_split_line ( line ) ;
-
     if(args[0]!=NULL)
     {
       // Cas du exit
-      if(strcasecmp(args[0],"exit")==0)
+      if(strcmp(args[0],"exit")==0)
       {
         exit(0);
       }
