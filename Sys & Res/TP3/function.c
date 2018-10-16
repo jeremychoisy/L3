@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include "function.h"
 
 /*======================================================*/
 char * sh_read_line ( void ) {
@@ -142,6 +143,9 @@ void sh_loop ( void ) {
       // Cas du exit
       if(strcasecmp(args[0],"exit")==0)
       {
+        free(f);
+        free(forbiddens);
+        free(args);
         exit(0);
       }
 
