@@ -5,15 +5,17 @@
 #include <signal.h>
 #include <string.h>
 
+/*======================================================*/
+// Handler du signal SIGINT
 void handlerSIGINT(int sig){
   printf("Utilisation de Ctrl+C interdite, utilisez la commande exit.\n");
 }
 
-
+/*======================================================*/
 int main ( int argc , char *argv [ ] ) {
 // Init : Load config files, if any
   struct sigaction action;
-
+// On met en place la gestion du signal SIGINT (CTRL+C)
   memset(&action,0,sizeof(action));
   action.sa_handler = handlerSIGINT;
   action.sa_flags=0;
