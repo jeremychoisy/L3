@@ -3,7 +3,6 @@
 #ifndef IMAGEH
 #define IMAGEH
 
-#define NMAX 3000
 #define SIZECOMMENT 5000
 
 typedef struct {
@@ -11,9 +10,7 @@ typedef struct {
   char comments[SIZECOMMENT];
   int nl, nc;  /* Nombre ligne/colonnes */
   int ng;      /* Nombre de gris */
-  unsigned char pixels[NMAX*NMAX]; /* Pas top et ... */
-				   /* si vous le sentez => heap !  */
-                                   /* Par contre le 2D est inutile */
+  unsigned char *pixels; /* valeurs de pixels */
 } image;
 
 /* Prototypes */
