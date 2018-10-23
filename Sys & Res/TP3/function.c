@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include "function.h"
+#include <errno.h>
 
 /*======================================================*/
 char * sh_read_line ( void ) {
@@ -74,7 +75,7 @@ int sh_execute ( char ** args, char ** forbiddens ) {
   // déroulé.
   if(execR!=0)
   {
-    printf("l3miageshell: %s : commande introuvable.\n",args[0]);
+    perror("l3miageshell: ");
   }
 }
 
@@ -97,6 +98,10 @@ void sh_loop ( void ) {
 
 // variables forbidden
   char * f = malloc(sizeof(char)*BUFFSIZE);
+  if ( f==NULL ) {
+      fprintf ( stderr , " lsh : allocation  error \n" ) ;
+      exit ( EXIT_FAILURE ) ;
+    }
   char **forbiddens;
 
  // variables newf/rmf
@@ -106,6 +111,8 @@ void sh_loop ( void ) {
  // variables fork
   int status = 0;
   pid_t pid;
+  int exit_cond;
+  int ESPERLUETTE =0;
 
 // struc sigaction pour la gestion de SIGCHLD
   struct sigaction action;
@@ -130,9 +137,12 @@ void sh_loop ( void ) {
     forbiddens[0]=NULL;
     printf("Initialisation de FORBIDDEN : utilisez newf/rmf pour modifier la liste.\n");
   }
+
+
+
   do
   {
-    printf ( "%s" , prompt ) ;
+    printf ( "%s" , prompt) ;
     fflush ( stdout ) ;
 
     line = sh_read_line ( ) ;
@@ -140,6 +150,19 @@ void sh_loop ( void ) {
 
     if(args[0]!=NULL)
     {
+      int i=0;
+      while(args[i]!=NULL){
+        i++;
+      }
+      if(strstr(args[i-1],"&")){
+        memset(&action,0,sizeof(action));
+        action.sa_handler = handlerSIGCHLD;
+        action.sa_flags=0;
+        sigemptyset(&action.sa_mask);
+        sigaction (SIGCHLD,&action,NULL);
+        ESPERLUETTE = 1;
+        args[i-1]=NULL;
+      }
       // Cas du exit
       if(strcmp(args[0],"exit")==0)
       {
@@ -226,13 +249,13 @@ void sh_loop ( void ) {
         }
         else
         {
-          // On met en place la gestion de SIGCHLD.
-          memset(&action,0,sizeof(action));
-          action.sa_handler = handlerSIGCHLD;
-          action.sa_flags=0;
-          sigemptyset(&action.sa_mask);
-          sigaction (SIGCHLD,&action,NULL);
-          sleep(5);
+          if(ESPERLUETTE==0){
+            pid =wait(&exit_cond);
+
+            if ( !WIFEXITED ( exit_cond ))
+              printf (" Le fils %d s ’ est mal termine : %d\n" , pid ,
+              WTERMSIG ( exit_cond ));
+          }
         }
       }
     }
