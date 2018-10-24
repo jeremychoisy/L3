@@ -4,7 +4,7 @@ import java.applet.Applet;
 public class Code39Applet extends Applet {
   public void paint(Graphics g) {
     Symbole s;
-    IterateurSymbole i = new IterateurSymbole("010010100010010100010010100");
+    IterateurSymbole i = new IterateurSymbole("010010100");
     int x = 5;
 
     while(!i.estTerminee())

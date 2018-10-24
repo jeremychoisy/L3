@@ -5,10 +5,9 @@ html{
 
 div.barrenavigation
 {
-  position : fixed;
+  position : absolute fixed;
   top = 0;
   height : 1.5em;
-  position : relative;
   background-color:black;
 }
 
