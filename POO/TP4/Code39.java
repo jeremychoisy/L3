@@ -1,7 +1,7 @@
 import java.util.*;
 
 class Code39{
-  static HashMap<char,String> map = new HashMap<char,String>(43);
+  static HashMap<Character,String> map = new HashMap<Character,String>(43);
 
   static{
     map.put('A', "100001001");
@@ -14,21 +14,22 @@ class Code39{
     map.put('H', "100001100");
     map.put('I', "001001100");
     map.put('J', "000011100");
-    map.put('l', "001000011");
-    map.put('m', "101000010");
-    map.put('n', "000010011");
-    map.put('o', "100010010");
-    map.put('p', "001010010");
-    map.put('q', "000000111");
-    map.put('r', "100000110");
-    map.put('s', "001000110");
-    map.put('t', "000010110");
-    map.put('u', "110000001");
-    map.put('v', "011000001");
+    map.put('K', "100000011");
+    map.put('L', "001000011");
+    map.put('M', "101000010");
+    map.put('N', "000010011");
+    map.put('O', "100010010");
+    map.put('P', "001010010");
+    map.put('Q', "000000111");
+    map.put('R', "100000110");
+    map.put('S', "001000110");
+    map.put('T', "000010110");
+    map.put('U', "110000001");
+    map.put('V', "011000001");
     map.put('w', "111000000");
-    map.put('x', "010010001");
-    map.put('y', "110010000");
-    map.put('z', "011010000");
+    map.put('X', "010010001");
+    map.put('Y', "110010000");
+    map.put('Z', "011010000");
     map.put('0', "000110100");
     map.put('1', "100100001");
     map.put('2', "001100001");
@@ -39,15 +40,26 @@ class Code39{
     map.put('7', "000100101");
     map.put('8', "100100100");
     map.put('9', "001100100");
-    map.put(" ","100001001");
-    map.put("-","100001001");
-    map.put("$","100001001");
-    map.put("%","100001001");
-    map.put(".","100001001");
-    map.put("/","100001001");
-    map.put("+","100001001");
-    map.put("*","100001001");
+    map.put(' ', "011000100");
+    map.put('-', "010000101");
+    map.put('$', "010101000");
+    map.put('%', "000101010");
+    map.put('.', "110000100");
+    map.put('/', "010100010");
+    map.put('+', "010001010");
+    map.put('*', "010010100");
+  }
 
+  public String getCode(char c){
+    return map.get(Character.toUpperCase(c));
+  }
 
+  public String getCode(String s){
+    String res = this.getCode('*');
+    for(int i=0;i<s.length();i++){
+      res+=this.getCode(s.charAt(i));
+    }
+    res+=this.getCode('*');
+    return res;
   }
 }
