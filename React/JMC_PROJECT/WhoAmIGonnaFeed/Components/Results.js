@@ -48,7 +48,7 @@ class Results extends React.Component{
             />
           </View>
           <View style={styles.versus}>
-            <Text style={styles.text_versus}> Versus </Text>
+            <Text style={styles.text_versus}> VS </Text>
           </View>
           <View style={styles.team_two}>
           <FlatList
@@ -72,7 +72,7 @@ const styles=StyleSheet.create({
     flexDirection:'row'
   },
   team_one:{
-    flex:1,
+    flex:3,
     backgroundColor:'blue',
 
   },
@@ -88,7 +88,7 @@ const styles=StyleSheet.create({
     color:'yellow'
   },
   team_two:{
-    flex:1,
+    flex:3,
     backgroundColor:'red',
   },
   text_header:{

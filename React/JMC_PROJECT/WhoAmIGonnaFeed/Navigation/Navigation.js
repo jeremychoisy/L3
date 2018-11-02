@@ -8,14 +8,23 @@ import Settings from '../Components/Settings'
 const SearchStackNavigator = createStackNavigator({
   Search: {
     screen: Search,
-    navigationOptions: {
-      title: 'Welcome'
+    navigationOptions:{
+      title:'Welcome'
     }
   },
   Results: {
-    screen: Results
+    screen: Results,
+    navigationOptions:{
+      title:'Current game'
+    }
   }
-})
+},
+{
+  navigationOptions: {
+    headerStyle:{height:35}
+    }
+  }
+)
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -29,7 +38,7 @@ const TabNavigator = createBottomTabNavigator(
         }
       }
     },
-    Aboutus: {
+    Settings: {
       screen: Settings,
       navigationOptions: {
         tabBarIcon: () => {
@@ -42,10 +51,12 @@ const TabNavigator = createBottomTabNavigator(
 },
   {
     tabBarOptions: {
-      activeBackgroundColor: '#DDDDDD', // Couleur d'arrière-plan de l'onglet sélectionné
-      inactiveBackgroundColor: '#FFFFFF', // Couleur d'arrière-plan des onglets non sélectionnés
-      showLabel: false, // On masque les titres
-      showIcon: true // On informe le TabNavigator qu'on souhaite afficher les icônes définis
+      activeBackgroundColor: '#DDDDDD',
+      inactiveBackgroundColor: '#FFFFFF',
+      showLabel: false,
+      showIcon: true,
+      style:{height:35}
+
     }
   }
 )
