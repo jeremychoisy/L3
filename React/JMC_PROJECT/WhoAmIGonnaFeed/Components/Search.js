@@ -1,5 +1,6 @@
 import React from 'react'
 import {View, Button, TextInput, Text, StyleSheet, ActivityIndicator,} from 'react-native'
+import {getSum, getCurrentMatch} from '../API/RIOTApi'
 
 
 class Search extends React.Component{
@@ -13,7 +14,17 @@ class Search extends React.Component{
   }
 
   _displayResults = (nomSum) =>{
-    this.props.navigation.navigate("Results",{nomSum : nomSum})
+    getSum(nomSum).then((sumData)=>{
+      getCurrentMatch(sumData.id).then((gameData)=>{
+        if(gameData.participants === undefined){
+          console.log('ERREUR')
+        }
+        else
+        {
+          this.props.navigation.navigate("Results",{gameData : gameData})
+        }
+      })
+    })
   }
 
   render(){

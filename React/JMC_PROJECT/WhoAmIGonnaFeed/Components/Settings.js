@@ -1,7 +1,7 @@
 import React from 'react'
 import {View,Text,StyleSheet} from 'react-native'
 
-class MyAccount extends React.Component{
+class Settings extends React.Component{
   render(){
     return(
       <View>
@@ -15,4 +15,4 @@ const styles = StyleSheet.create({
     marginTop:20
   }
 })
-export default MyAccount
+export default Settings

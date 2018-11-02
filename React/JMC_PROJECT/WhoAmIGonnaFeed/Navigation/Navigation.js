@@ -3,7 +3,7 @@ import { StyleSheet, Image } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 import Search from '../Components/Search'
 import Results from '../Components/Results'
-import MyAccount from '../Components/MyAccount'
+import Settings from '../Components/Settings'
 
 const SearchStackNavigator = createStackNavigator({
   Search: {
@@ -17,7 +17,7 @@ const SearchStackNavigator = createStackNavigator({
   }
 })
 
-const MoviesTabNavigator = createBottomTabNavigator(
+const TabNavigator = createBottomTabNavigator(
   {
     Search: {
       screen: SearchStackNavigator,
@@ -30,11 +30,11 @@ const MoviesTabNavigator = createBottomTabNavigator(
       }
     },
     Aboutus: {
-      screen: MyAccount,
+      screen: Settings,
       navigationOptions: {
         tabBarIcon: () => {
           return <Image
-            source={require('../Images/ic_account.png')}
+            source={require('../Images/ic_settings.png')}
             style={styles.icon}/>
         }
     }
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default MoviesTabNavigator
+export default TabNavigator
