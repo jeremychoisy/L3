@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Button, TextInput, Text, StyleSheet, ActivityIndicator,} from 'react-native'
+import {View, Button, TextInput, Text, StyleSheet, ActivityIndicator,Alert} from 'react-native'
 import {getSum, getCurrentMatch} from '../API/RIOTApi'
 
 
@@ -17,7 +17,7 @@ class Search extends React.Component{
     getSum(nomSum).then((sumData)=>{
       getCurrentMatch(sumData.id).then((gameData)=>{
         if(gameData.participants === undefined){
-          console.log('ERREUR')
+          Alert.alert("This summoner is not currently in game.")
         }
         else
         {
