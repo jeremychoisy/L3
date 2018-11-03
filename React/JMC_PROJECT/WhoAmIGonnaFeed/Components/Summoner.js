@@ -1,6 +1,7 @@
 import React from 'react'
 import {View,Text,Image, StyleSheet, ActivityIndicator} from 'react-native'
-import {getSumIcon,getSum,getLeague} from '../API/RIOTApi'
+import {getSumIcon,getSum,getLeague,getChampIcon} from '../API/RIOTApi'
+import champs from '../Helpers/ChampsData'
 
 class Summoner extends React.Component{
   constructor(props){
@@ -14,15 +15,13 @@ class Summoner extends React.Component{
 
 
   componentDidMount(){
-    getSum(this.props.summoner.summonerName).then((data)=>{
+    getSum(this.props.summoner.summonerName).then((sumData)=>{
+      getLeague(this.props.summoner.summonerId).then((data)=>{
         this.setState({
-          sumData:data
+          sumData:sumData,
+          leagueData:data,
+          isLoading:false
         })
-    })
-    getLeague(this.props.summoner.summonerId).then((data)=>{
-      this.setState({
-        leagueData:data,
-        isLoading:false
       })
     })
   }
@@ -38,6 +37,7 @@ class Summoner extends React.Component{
   }
 
   _displayLeagueIcon(){
+    if(this.state.leagueData !== undefined && this.state.leagueData.lenght !== 0){
     switch(this.state.leagueData[0].tier){
       case 'BRONZE':
         return <Image
@@ -81,10 +81,14 @@ class Summoner extends React.Component{
           />
     }
   }
+  }
 
   _displaySummoner(){
+
     const {leagueData,sumData} = this.state
-    if(leagueData !== undefined && sumData !== undefined){
+    const champIndex = champs.findIndex(item => item.id == this.props.summoner.championId)
+
+    if((leagueData !== undefined && leagueData.length !== 0) && sumData !== undefined){
       return(
         <View style={styles.scrollview_container}>
           <View style={styles.summoner}>
@@ -94,15 +98,52 @@ class Summoner extends React.Component{
             />
             <View style={styles.sum_info}>
               <Text style={styles.name}> {this.state.sumData.name} </Text>
-              <Text style={styles.lvl}>  {this.state.sumData.summonerLevel} </Text>
+              <Text style={styles.lvl}>  Lvl : {this.state.sumData.summonerLevel} </Text>
               {this._displayLeagueIcon()}
               <Text style={styles.league}> {this.state.leagueData[0].tier} {this.state.leagueData[0].rank} </Text>
+              <Text style={styles.ratio}>  {this.state.leagueData[0].wins} W / {this.state.leagueData[0].losses} L </Text>
+            </View>
+            <View style={styles.champ_info}>
+              <Image
+                style={styles.image_champ}
+                source={{uri: getChampIcon(champs[champIndex].name)}}
+              />
+            </View>
+          </View>
+        </View>
+      )
+    }
+    else if(leagueData !== undefined && sumData !== undefined)
+    {
+      return(
+        <View style={styles.scrollview_container}>
+          <View style={styles.summoner}>
+            <Image
+              style={styles.image}
+              source={{uri: getSumIcon(this.state.sumData.profileIconId)}}
+            />
+            <View style={styles.sum_info}>
+              <Text style={styles.name}> {this.state.sumData.name} </Text>
+              <Text style={styles.lvl}>  Lvl : {this.state.sumData.summonerLevel} </Text>
+              <Image
+                 source={require('../Images/leagues_icons/provisional.png')}
+                 style={styles.icon}
+               />
+              <Text style={styles.league}> UNRANKED</Text>
+              <Text style={styles.ratio}> 0 W / 0 L</Text>
+            </View>
+            <View style={styles.champ_info}>
+            <Image
+              style={styles.image_champ}
+              source={{uri: getChampIcon(champs[champIndex].name)}}
+            />
             </View>
           </View>
         </View>
       )
     }
   }
+
 
   render(){
     return(
@@ -119,7 +160,7 @@ const styles = StyleSheet.create({
     flex:1
   },
   scrollview_container:{
-    height:100,
+    height:90,
     flex:1,
     borderWidth:1,
     borderColor:'black'
@@ -130,19 +171,29 @@ const styles = StyleSheet.create({
   },
   image:{
     width:90,
-    height:100,
+    height:100
   },
   sum_info:{
+    flex:2,
+    flexDirection:'column',
+    alignItems:'center'
+  },
+  champ_info:{
     flex:1,
-    flexDirection:'column'
+    alignItems:'flex-end'
+  },
+  image_champ:{
+    width:45,
+    height:50
   },
   name:{
-    flex:2,
+    flex:1,
     fontWeight:'bold'
   },
   lvl:{
-    flex:2,
-    fontWeight:'bold'
+    flex:1,
+    fontWeight:'bold',
+
   },
   league:{
     flex:1
