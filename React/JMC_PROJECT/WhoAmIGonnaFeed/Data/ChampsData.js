@@ -105,7 +105,7 @@ export default data = [
     "name" : "KogMaw"
   },
     { "id" : 7,
-    "name" : "LeBlanc"
+    "name" : "Leblanc"
   },
     { "id" : 64,
     "name" : "LeeSin"

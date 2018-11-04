@@ -23,6 +23,13 @@ export function getCurrentMatch(id){
   .catch((error) => console.error(error))
 }
 
+export function getRunes(){
+  const url = "http://ddragon.leagueoflegends.com/cdn/" + version + "/data/en_US/runesReforged.json"
+  return fetch(url)
+  .then((response) => response.json())
+  .catch((error) => console.error(error))
+}
+
 // Icon
 
 export function getSumIcon(id){
@@ -34,7 +41,7 @@ export function getChampIcon(name){
 
 }
 
-export function getRuneIcon(name){
-  return "https://ddragon.leagueoflegends.com/cdn/img/" + name;
+export function getRuneIcon(path){
+  return "https://ddragon.leagueoflegends.com/cdn/img/" + path;
 
 }
