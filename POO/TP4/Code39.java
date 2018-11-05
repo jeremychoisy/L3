@@ -15,6 +15,10 @@ class Code39{
     map.put('H', "100001100");
     map.put('I', "001001100");
     map.put('J', "000011100");
+<<<<<<< HEAD
+=======
+    map.put('K', "100000011");
+>>>>>>> 8109303852a88f915808436427565aa9b6469fd0
     map.put('L', "001000011");
     map.put('M', "101000010");
     map.put('N', "000010011");
@@ -26,7 +30,11 @@ class Code39{
     map.put('T', "000010110");
     map.put('U', "110000001");
     map.put('V', "011000001");
+<<<<<<< HEAD
     map.put('W', "111000000");
+=======
+    map.put('w', "111000000");
+>>>>>>> 8109303852a88f915808436427565aa9b6469fd0
     map.put('X', "010010001");
     map.put('Y', "110010000");
     map.put('Z', "011010000");
@@ -45,7 +53,11 @@ class Code39{
     map.put('$', "010101000");
     map.put('%', "000101010");
     map.put('.', "110000100");
+<<<<<<< HEAD
     map.put('/', "010101010");
+=======
+    map.put('/', "010100010");
+>>>>>>> 8109303852a88f915808436427565aa9b6469fd0
     map.put('+', "010001010");
     map.put('*', "010010100");
   }
@@ -55,9 +67,15 @@ class Code39{
   }
 
   public String getCode(String s){
+<<<<<<< HEAD
     String res=this.getCode('*');
     for(int i=0;i<s.length();i++){
       res+=this.getCode(Character.toUpperCase(s.charAt(i)));
+=======
+    String res = this.getCode('*');
+    for(int i=0;i<s.length();i++){
+      res+=this.getCode(s.charAt(i));
+>>>>>>> 8109303852a88f915808436427565aa9b6469fd0
     }
     res+=this.getCode('*');
     return res;
