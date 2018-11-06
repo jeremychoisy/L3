@@ -393,7 +393,7 @@ export default data = [
     "name" : "Jhin"
   },
   { "id" : 136,
-    "name" : "Aurelion"
+    "name" : "AurelionSol"
   },
   { "id" : 163,
     "name" : "Taliyah"

@@ -1,0 +1,18 @@
+html{
+  font-family:Arial;
+}
+.frame
+{
+  clear:both;
+}
+.frame iframe
+{
+float:left;
+margin-left:10;
+}
+
+.frame span
+{
+margin-left:5;
+display:block;
+}

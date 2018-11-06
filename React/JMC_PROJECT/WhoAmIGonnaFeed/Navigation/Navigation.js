@@ -3,9 +3,9 @@ import { StyleSheet, Image } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 import Search from '../Components/Search'
 import Results from '../Components/Results'
-import Settings from '../Components/Settings'
+import SearchHistory from '../Components/SearchHistory'
 
-const SearchStackNavigator = createStackNavigator({
+const MainSearchStackNavigator = createStackNavigator({
   Search: {
     screen: Search,
     navigationOptions:{
@@ -26,10 +26,31 @@ const SearchStackNavigator = createStackNavigator({
   }
 )
 
+const SecondSearchStackNavigator = createStackNavigator({
+  SearchHistory: {
+    screen : SearchHistory,
+    navigationOptions:{
+      title:'Search History'
+    }
+  },
+  Results:{
+    screen: Results,
+    navigationOptions:{
+      title:'Current game'
+    }
+  }
+},
+{
+  navigationOptions: {
+    headerStyle:{height:35}
+    }
+  }
+)
+
 const TabNavigator = createBottomTabNavigator(
   {
     Search: {
-      screen: SearchStackNavigator,
+      screen: MainSearchStackNavigator,
       navigationOptions: {
         tabBarIcon: () => {
           return <Image
@@ -39,7 +60,7 @@ const TabNavigator = createBottomTabNavigator(
       }
     },
     Settings: {
-      screen: Settings,
+      screen: SecondSearchStackNavigator,
       navigationOptions: {
         tabBarIcon: () => {
           return <Image

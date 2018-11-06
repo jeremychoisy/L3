@@ -3,7 +3,7 @@ import {View,Text,Image, StyleSheet, ActivityIndicator} from 'react-native'
 import {getSumIcon,getSum,getLeague,getChampIcon,getRuneIcon, getRunes} from '../API/RIOTApi'
 import champs from '../Data/ChampsData'
 
-class Summoner extends React.Component{
+class SummonerItem extends React.Component{
   constructor(props){
     super(props)
     getRunes().then(data => this.runes = data)
@@ -38,33 +38,35 @@ class Summoner extends React.Component{
   }
 
   _displayChampAndRunes(){
-    const champIndex = champs.findIndex(item => item.id == this.props.summoner.championId)
-    const mainRuneIndex = this.runes.findIndex(item => item.id == this.props.summoner.perks.perkStyle)
-    const mainTalentIndex = this.runes[mainRuneIndex].slots[0].runes.findIndex(item => item.id == this.props.summoner.perks.perkIds[0])
-    const secondaryRuneIndex = this.runes.findIndex(item => item.id == this.props.summoner.perks.perkSubStyle)
+    if(this.runes !== undefined){
+      const champIndex = champs.findIndex(item => item.id == this.props.summoner.championId)
+      const mainRuneIndex = this.runes.findIndex(item => item.id == this.props.summoner.perks.perkStyle)
+      const mainTalentIndex = this.runes[mainRuneIndex].slots[0].runes.findIndex(item => item.id == this.props.summoner.perks.perkIds[0])
+      const secondaryRuneIndex = this.runes.findIndex(item => item.id == this.props.summoner.perks.perkSubStyle)
 
-    return(
-      <View style={styles.champAndRunes}>
-        <View style={styles.champ}>
-          <Image
-            style={styles.image_champ}
-            source={{uri: getChampIcon(champs[champIndex].name)}}
-          />
+      return(
+        <View style={styles.champAndRunes}>
+          <View style={styles.champ}>
+            <Image
+              style={styles.image_champ}
+              source={{uri: getChampIcon(champs[champIndex].name)}}
+            />
+          </View>
+          <View style={styles.mainRune}>
+            <Image
+              style={styles.iconMainRune}
+              source={{uri: getRuneIcon(this.runes[mainRuneIndex].slots[0].runes[mainTalentIndex].icon)}}
+            />
+          </View>
+          <View style={styles.secondaryRune}>
+            <Image
+                style={styles.iconSecondaryRune}
+                source={{uri: getRuneIcon(this.runes[secondaryRuneIndex].icon)}}
+            />
+          </View>
         </View>
-        <View style={styles.mainRune}>
-          <Image
-            style={styles.iconMainRune}
-            source={{uri: getRuneIcon(this.runes[mainRuneIndex].slots[0].runes[mainTalentIndex].icon)}}
-          />
-        </View>
-        <View style={styles.secondaryRune}>
-          <Image
-            style={styles.iconSecondaryRune}
-            source={{uri: getRuneIcon(this.runes[secondaryRuneIndex].icon)}}
-          />
-        </View>
-      </View>
-    )
+      )
+    }
   }
 
   _displayRank(){
@@ -278,4 +280,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Summoner
+export default SummonerItem
