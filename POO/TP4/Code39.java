@@ -1,4 +1,5 @@
 import java.util.*;
+import java.awt.Graphics;
 
 class Code39{
   static HashMap<Character,String> map = new HashMap<Character,String>(43);
@@ -26,6 +27,7 @@ class Code39{
     map.put('T', "000010110");
     map.put('U', "110000001");
     map.put('V', "011000001");
+    map.put('W', "111000000");
     map.put('w', "111000000");
     map.put('X', "010010001");
     map.put('Y', "110010000");
@@ -45,6 +47,7 @@ class Code39{
     map.put('$', "010101000");
     map.put('%', "000101010");
     map.put('.', "110000100");
+    map.put('/', "010101010");
     map.put('/', "010100010");
     map.put('+', "010001010");
     map.put('*', "010010100");
@@ -55,9 +58,9 @@ class Code39{
   }
 
   public String getCode(String s){
-    String res = this.getCode('*');
+    String res=this.getCode('*');
     for(int i=0;i<s.length();i++){
-      res+=this.getCode(s.charAt(i));
+      res+=this.getCode(Character.toUpperCase(s.charAt(i)));
     }
     res+=this.getCode('*');
     return res;

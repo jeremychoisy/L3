@@ -1,7 +1,6 @@
 import React from 'react'
 import {ScrollView, View,Text,StyleSheet,Image,ActivityIndicator,FlatList} from 'react-native'
-import {} from '../API/RIOTApi'
-import Summoner from './Summoner'
+import SummonerItem from './SummonerItem'
 
 class Results extends React.Component{
   constructor(props){
@@ -44,7 +43,7 @@ class Results extends React.Component{
             <FlatList
               data={this.state.summoners.filter((sum)=> sum.teamId == 100)}
               keyExtractor={(item) => item.summonerId.toString()}
-              renderItem={({item}) => <Summoner summoner={item}/>}
+              renderItem={({item}) => <SummonerItem summoner={item}/>}
             />
           </View>
           <View style={styles.versus}>
@@ -54,7 +53,7 @@ class Results extends React.Component{
           <FlatList
             data={this.state.summoners.filter((sum)=> sum.teamId == 200)}
             keyExtractor={(item) => item.summonerId.toString()}
-            renderItem={({item}) => <Summoner summoner={item}/>}
+            renderItem={({item}) => <SummonerItem summoner={item}/>}
           />
           </View>
         </View>

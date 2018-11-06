@@ -3,10 +3,9 @@ import java.applet.Applet;
 
 public class Code39Applet extends Applet {
   public void paint(Graphics g) {
-    Symbole s;
     Code39 c = new Code39();
-    String chaine=c.getCode("JAVA 2012");
-    IterateurSymbole i = new IterateurSymbole(chaine);
+    Symbole s;
+    IterateurSymbole i = new IterateurSymbole(c.getCode("JAVA 2012"));
     int x = 5;
 
     while(!i.estTerminee())

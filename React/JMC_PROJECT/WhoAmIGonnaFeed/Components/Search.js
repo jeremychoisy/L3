@@ -1,6 +1,7 @@
 import React from 'react'
 import {View, Button, TextInput, Text, StyleSheet, ActivityIndicator,Alert} from 'react-native'
 import {getSum, getCurrentMatch} from '../API/RIOTApi'
+import {connect} from 'react-redux'
 
 
 class Search extends React.Component{
@@ -13,7 +14,13 @@ class Search extends React.Component{
     this.searched_text=text
   }
 
+  _addSearchHistory(nomSum) {
+    const action = { type: "ADD_ITEM", value: nomSum }
+    this.props.dispatch(action)
+  }
+
   _displayResults = (nomSum) =>{
+    this._addSearchHistory(nomSum)
     getSum(nomSum).then((sumData)=>{
       getCurrentMatch(sumData.id).then((gameData)=>{
         if(gameData.participants === undefined){
@@ -34,7 +41,7 @@ class Search extends React.Component{
         <Text style={styles.text}> Entrez votre nom d'invocateur : </Text>
         <TextInput
             style={styles.textInput}
-            placeholder="Nom d'invocateur"
+            placeholder="Summoner name"
             onChangeText={(text)=>this._searchTextInputChanged(text)}
             onSubmitEditing={()=>this._displayResults(this.searched_text)}/>
         <Button style={styles.button} title='Go !'onPress={()=>this._displayResults(this.searched_text)}/>
@@ -65,4 +72,10 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Search
+const mapStateToProps = state =>{
+  return{
+    searchHistory : state.searchHistory
+  }
+}
+
+export default connect(mapStateToProps)(Search)
