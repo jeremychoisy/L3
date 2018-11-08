@@ -50,8 +50,6 @@ const styles = StyleSheet.create({
   },
   viewSummonerName:{
     flex:1,
-    borderWidth:1,
-    borderColor:'black',
     justifyContent:'center',
   },
   textSummonerName:{

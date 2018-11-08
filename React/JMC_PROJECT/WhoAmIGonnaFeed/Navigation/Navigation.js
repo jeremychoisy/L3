@@ -9,7 +9,7 @@ const MainSearchStackNavigator = createStackNavigator({
   Search: {
     screen: Search,
     navigationOptions:{
-      title:'Welcome'
+      title:'Who am I gonna feed ?'
     }
   },
   Results: {
