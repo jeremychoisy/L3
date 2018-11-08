@@ -1,13 +1,32 @@
 import React from 'react'
-import {View, Button, TextInput, Text, StyleSheet, ActivityIndicator,Alert} from 'react-native'
+import {View, Button, TextInput, Text, StyleSheet, ActivityIndicator, Alert, Image} from 'react-native'
 import {getSum, getCurrentMatch} from '../API/RIOTApi'
 import {connect} from 'react-redux'
+import {Font} from 'expo'
 
 
 class Search extends React.Component{
   constructor(props){
     super(props)
     this.searched_text=""
+    this.state = {
+      isLoading:false
+    }
+  }
+
+  componentDidMount(){
+    Font.loadAsync({
+      'FrizQuadrata': require('../assets/fonts/FrizQuadrata.ttf')
+    });
+  }
+  _displayLoading() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.loading_container}>
+          <ActivityIndicator size='large' />
+        </View>
+      )
+    }
   }
 
   _searchTextInputChanged(text){
@@ -20,9 +39,15 @@ class Search extends React.Component{
   }
 
   _displayResults = (nomSum) =>{
+    this.setState({
+      isLoading:true
+    })
     this._addSearchHistory(nomSum)
     getSum(nomSum).then((sumData)=>{
       getCurrentMatch(sumData.id).then((gameData)=>{
+        this.setState({
+          isLoading:false
+        })
         if(gameData.participants === undefined){
           Alert.alert("This summoner is not currently in game.")
         }
@@ -37,14 +62,20 @@ class Search extends React.Component{
   render(){
     return(
       <View style={styles.main_container}>
-        <Text style={styles.header_text}> Who am I gonna Feed ? </Text>
         <Text style={styles.text}> Entrez votre nom d'invocateur : </Text>
+        <View style={styles.input_container}>
         <TextInput
             style={styles.textInput}
             placeholder="Summoner name"
             onChangeText={(text)=>this._searchTextInputChanged(text)}
-            onSubmitEditing={()=>this._displayResults(this.searched_text)}/>
+            onSubmitEditing={()=>this._displayResults(this.searched_text)}
+            underlineColorAndroid="transparent"/>
+        </View>
         <Button style={styles.button} title='Go !'onPress={()=>this._displayResults(this.searched_text)}/>
+        <Image
+          source={require('../Images/evil.jpg')}
+          style={styles.image}
+        />
       </View>
     )
   }
@@ -55,20 +86,35 @@ class Search extends React.Component{
 const styles = StyleSheet.create({
   main_container:{
     flex:1,
-    marginTop:20,
-  },
-  header_text:{
-    textAlign:'center',
-    fontSize:20,
-    marginBottom:10
+    backgroundColor:'black'
   },
   text:{
-    marginBottom:10
+    fontFamily:"FrizQuadrata",
+    fontSize:18,
+    marginBottom:10,
+    color:'rgb(240,219,77)'
+  },
+  input_container:{
+    backgroundColor:'white',
+    marginBottom:20
   },
   input_text:{
-    marginBottom:30
+
   },
   button:{
+  },
+  loading_container: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  image:{
+    marginTop:20,
+    height:110
   }
 })
 

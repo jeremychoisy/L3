@@ -1,13 +1,13 @@
 import React from 'react'
 import {ScrollView, View,Text,StyleSheet,Image,ActivityIndicator,FlatList} from 'react-native'
 import SummonerItem from './SummonerItem'
+import game from '../Data/gameData'
 
 class Results extends React.Component{
   constructor(props){
     super(props)
     this.gameMode = ""
     this.gameType = ""
-    this.gameId =""
     this.state={
       summoners : [],
       isLoading: true
@@ -15,9 +15,9 @@ class Results extends React.Component{
   }
   componentDidMount(){
     const {gameData} = this.props.navigation.state.params
+
     this.gameMode = gameData.gameMode;
-    this.gameType = gameData.gameQueueConfigId;
-    this.gameId =gameData.gameId;
+    this.gameType = game[game.findIndex(item => item.id == gameData.gameQueueConfigId)].type;
     this.setState({
       summoners : gameData.participants,
       isLoading:false
@@ -37,7 +37,7 @@ class Results extends React.Component{
     return(
       <ScrollView style={styles.main_container}>
         {this._displayLoading()}
-        <Text style={styles.text_header}> MODE : {this.gameMode} TYPE : {this.gameType} GAME ID :{this.gameId} </Text>
+        <Text style={styles.text_header}>{this.gameMode} | {this.gameType}</Text>
         <View style={styles.second_container}>
           <View style={styles.team_one}>
             <FlatList
