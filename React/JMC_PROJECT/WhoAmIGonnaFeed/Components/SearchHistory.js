@@ -5,6 +5,7 @@ import SearchHistoryItem from './SearchHistoryItem'
 
 class SearchHistory extends React.Component{
 
+// Navigate to the Results View
   _goToResults = (data) => {
     this.props.navigation.navigate('Results', {gameData:data})
   }
@@ -15,18 +16,26 @@ class SearchHistory extends React.Component{
         <FlatList
         data= {this.props.searchHistory}
         keyExtractor={(item) => item.toString()}
-        renderItem={({item}) => <SearchHistoryItem goToResults={this._goToResults} sumName={item}/>}
+        renderItem={({item}) => <SearchHistoryItem
+                                  goToResults={this._goToResults}
+                                  sumName={item}
+                                />}
         />
       </ScrollView>
     )
   }
 }
+
+// StyleSheet
+
 const styles = StyleSheet.create({
   mainContainer:{
-    flex:1
+    flex:1,
+    backgroundColor: 'black'
   }
 })
 
+// Connect to the store
 const mapStateToProps = state =>{
   return{
     searchHistory : state.searchHistory

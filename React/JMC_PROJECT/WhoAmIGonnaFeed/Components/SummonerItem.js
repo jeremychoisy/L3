@@ -15,7 +15,7 @@ class SummonerItem extends React.Component{
     }
   }
 
-
+// API calls once the component is mounted
   componentDidMount(){
     getSum(this.props.summoner.summonerName).then((sumData)=>{
       getLeague(this.props.summoner.summonerId).then((data)=>{
@@ -29,16 +29,18 @@ class SummonerItem extends React.Component{
     })
   }
 
+// display loading icon
   _displayLoading() {
     if (this.state.isLoading) {
       return (
-        <View style={styles.loading_container}>
+        <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' />
         </View>
       )
     }
   }
 
+// display champion and runes
   _displayChampAndRunes(){
     if(this.runes !== undefined){
       const champIndex = champs.findIndex(item => item.id == this.props.summoner.championId)
@@ -50,7 +52,7 @@ class SummonerItem extends React.Component{
         <View style={styles.champAndRunes}>
           <View style={styles.champ}>
             <Image
-              style={styles.image_champ}
+              style={styles.imageChamp}
               source={{uri: getChampIcon(champs[champIndex].name)}}
             />
           </View>
@@ -71,11 +73,13 @@ class SummonerItem extends React.Component{
     }
   }
 
+ // Display league and rank
   _displayRank(){
     if(this.state.leagueData !== undefined){
-      if(this.state.leagueData.length !== 0 ){
+      console.log('DEFINED')
+      if(this.state.leagueData.length !== 0 ){      console.log('!=0')
         return(
-          <View style={styles.sum_rank}>
+          <View style={styles.sumRank}>
             <Text style={styles.league}> {this.state.leagueData[0].tier} {this.state.leagueData[0].rank} </Text>
             {this._displayLeagueIcon()}
             <Text style={styles.ratio}>  {this.state.leagueData[0].wins} W / {this.state.leagueData[0].losses} L </Text>
@@ -84,7 +88,7 @@ class SummonerItem extends React.Component{
       }
       else{
         return(
-          <View style={styles.sum_rank}>
+          <View style={styles.sumRank}>
             {this._displayLeagueIcon()}
             <Text style={styles.league}> UNRANKED </Text>
             <Text style={styles.ratio}> 0 W / 0 L</Text>
@@ -93,7 +97,7 @@ class SummonerItem extends React.Component{
       }
     }
   }
-
+// Display the league icon
   _displayLeagueIcon(){
     const {leagueData} = this.state
     if(leagueData !== undefined){
@@ -152,6 +156,7 @@ class SummonerItem extends React.Component{
     }
   }
 
+// View summoner
   _displaySummoner(){
 
     const {sumData} = this.state
@@ -159,14 +164,14 @@ class SummonerItem extends React.Component{
 
     if(this.state.dataLoaded){
       return(
-        <View style={styles.scrollview_container}>
+        <View style={styles.scrollviewContainer}>
           <View style={styles.summoner}>
             <Image
               style={styles.image}
               source={{uri: getSumIcon(this.state.sumData.profileIconId)}}
             />
-            <View style={styles.sum_info}>
-              <View style={styles.sum_details}>
+            <View style={styles.sumInfo}>
+              <View style={styles.sumDetails}>
                 <Text style={styles.name} numberOfLines={1}> {this.state.sumData.name} </Text>
                 <Text style={styles.lvl}>  Lvl : {this.state.sumData.summonerLevel} </Text>
               </View>
@@ -182,7 +187,7 @@ class SummonerItem extends React.Component{
 
   render(){
     return(
-      <View style={styles.main_container}>
+      <View style={styles.mainContainer}>
         {this._displayLoading()}
         {this._displaySummoner()}
       </View>
@@ -190,11 +195,12 @@ class SummonerItem extends React.Component{
   }
 }
 
+//StyleSheet
 const styles = StyleSheet.create({
-  main_container:{
+  mainContainer:{
     flex:1
   },
-  scrollview_container:{
+  scrollviewContainer:{
     height:110,
     flex:1,
     borderWidth:1,
@@ -209,29 +215,43 @@ const styles = StyleSheet.create({
     height:110
   },
   // Summoner infos
-  sum_info:{
+  sumInfo:{
     flex:2,
     flexDirection:'column',
     alignItems:'center'
   },
-  sum_details:{
+  sumDetails:{
     alignItems:'center',
     flex:1,
     marginBottom:10
   },
+  name:{
+    fontWeight:'bold',
+    color:'white'
+  },
+  lvl:{
+    fontWeight:'bold',
+    color:'white'
+  },
   // Summoner rank
-  sum_rank:{
+  sumRank:{
     alignItems:'center',
     flex:2
   },
   league:{
-    flex:1
+    flex:1,
+    color:'white'
   },
   ratio:{
     flex:1,
-    fontSize:10
+    fontSize:10,
+    color:'white'
   },
-  // Champ
+  league:{
+    flex:1,
+    color:'white'
+  },
+  // Champ & runes
   champAndRunes:{
     flex:1,
   },
@@ -245,7 +265,7 @@ const styles = StyleSheet.create({
   secondaryRune:{
     alignItems:'flex-end'
   },
-  image_champ:{
+  imageChamp:{
     width:45,
     height:50
   },
@@ -257,17 +277,7 @@ const styles = StyleSheet.create({
     width:10,
     height:10
   },
-  name:{
-    fontWeight:'bold'
-  },
-  lvl:{
-    fontWeight:'bold',
-
-  },
-  league:{
-    flex:1
-  },
-  loading_container: {
+  loadingContainer: {
     position: 'absolute',
     left: 0,
     right: 0,

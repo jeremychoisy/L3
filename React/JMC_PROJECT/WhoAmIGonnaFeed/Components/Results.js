@@ -11,15 +11,12 @@ class Results extends React.Component{
     this.state={
       summoners : [],
       isLoading: true,
-      isFontLoaded:false
     }
   }
-  async componentDidMount(){
-    await Font.loadAsync({
-      'FrizQuadrata' : require('../assets/fonts/FrizQuadrata.ttf')
-    })
-    const {gameData} = this.props.navigation.state.params
 
+  // get data from Search View once the component is mounted
+  componentDidMount(){
+    const {gameData} = this.props.navigation.state.params
     this.gameType = game[game.findIndex(item => item.id == gameData.gameQueueConfigId)].type;
 
     this.setState({
@@ -29,23 +26,25 @@ class Results extends React.Component{
     })
   }
 
+// display loading icon
   _displayLoading() {
     if (this.state.isLoading) {
       return (
-        <View style={styles.loading_container}>
+        <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' />
         </View>
       )
     }
   }
+
+  // Render
   render(){
     return(
-      this.state.isFontLoaded ?(
-      <ScrollView style={styles.main_container}>
+      <ScrollView style={styles.mainContainer}>
         {this._displayLoading()}
-        <Text style={styles.text_header}>{this.gameType}</Text>
-        <View style={styles.second_container}>
-          <View style={styles.team_one}>
+        <Text style={styles.textHeader}>{this.gameType}</Text>
+        <View style={styles.secondContainer}>
+          <View style={styles.teamOne}>
             <FlatList
               data={this.state.summoners.filter((sum)=> sum.teamId == 100)}
               keyExtractor={(item) => item.summonerId.toString()}
@@ -53,9 +52,10 @@ class Results extends React.Component{
             />
           </View>
           <View style={styles.versus}>
-            <Text style={styles.text_versus}> VS </Text>
+            <Text style={styles.textVersusV}> V </Text>
+            <Text style={styles.textVersusS}> S </Text>
           </View>
-          <View style={styles.team_two}>
+          <View style={styles.teamTwo}>
           <FlatList
             data={this.state.summoners.filter((sum)=> sum.teamId == 200)}
             keyExtractor={(item) => item.summonerId.toString()}
@@ -63,41 +63,45 @@ class Results extends React.Component{
           />
           </View>
         </View>
-      </ScrollView>) : null
+      </ScrollView>
     )
   }
 }
-
+ // StyleSheet
 const styles=StyleSheet.create({
-  main_container:{
+  mainContainer:{
     flex:1,
     backgroundColor:'black'
   },
-  second_container:{
+  secondContainer:{
     flexDirection:'row'
   },
-  team_one:{
+  teamOne:{
     flex:3,
-    backgroundColor:'blue',
+    backgroundColor:'rgb(0, 0, 102)',
 
   },
   versus:{
     flex:1,
     borderColor:'black',
     borderWidth: 1,
-    alignItems:'center',
     justifyContent:'center'
   },
-  text_versus:{
+  textVersusV:{
     fontSize:35,
-    color:'yellow'
+    color:'yellow',
+    textAlign:'left'
   },
-  team_two:{
+  textVersusS:{
+    fontSize:35,
+    color:'yellow',
+    textAlign:'right'
+  },
+  teamTwo:{
     flex:3,
-    backgroundColor:'red',
+    backgroundColor:'rgb(153, 0, 0)',
   },
-  text_header:{
-    fontFamily: 'FrizQuadrata',
+  textHeader:{
     textAlign:"center",
     fontSize:16,
     fontWeight:'bold',
@@ -107,7 +111,7 @@ const styles=StyleSheet.create({
     width:50,
     height:50
   },
-  loading_container: {
+  loadingContainer: {
     position: 'absolute',
     left: 0,
     right: 0,

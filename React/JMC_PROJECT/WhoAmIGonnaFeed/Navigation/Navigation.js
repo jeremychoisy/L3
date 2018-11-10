@@ -5,6 +5,7 @@ import Search from '../Components/Search'
 import Results from '../Components/Results'
 import SearchHistory from '../Components/SearchHistory'
 
+// StackNavigator 1
 const MainSearchStackNavigator = createStackNavigator({
   Search: {
     screen: Search,
@@ -21,11 +22,13 @@ const MainSearchStackNavigator = createStackNavigator({
 },
 {
   navigationOptions: {
-    headerStyle:{height:35}
+    headerStyle:{height:35,backgroundColor:'black'},
+    headerTintColor:'rgb(240,219,77)'
     }
   }
 )
 
+// StackNavigator 2
 const SecondSearchStackNavigator = createStackNavigator({
   SearchHistory: {
     screen : SearchHistory,
@@ -42,10 +45,13 @@ const SecondSearchStackNavigator = createStackNavigator({
 },
 {
   navigationOptions: {
-    headerStyle:{height:35}
+    headerStyle:{height:35,backgroundColor:'black'},
+    headerTintColor:'rgb(240,219,77)'
     }
   }
 )
+
+// TabNavigator
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -64,7 +70,7 @@ const TabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarIcon: () => {
           return <Image
-            source={require('../Images/ic_settings.png')}
+            source={require('../Images/ic_history.png')}
             style={styles.icon}/>
         }
     }
@@ -72,8 +78,8 @@ const TabNavigator = createBottomTabNavigator(
 },
   {
     tabBarOptions: {
-      activeBackgroundColor: '#DDDDDD',
-      inactiveBackgroundColor: '#FFFFFF',
+      activeBackgroundColor: 'rgb(240,200,20)',
+      inactiveBackgroundColor: 'rgb(240,219,77)',
       showLabel: false,
       showIcon: true,
       style:{height:35}
@@ -81,6 +87,8 @@ const TabNavigator = createBottomTabNavigator(
     }
   }
 )
+
+//StyleSheet
 
 const styles = StyleSheet.create({
   icon: {
