@@ -60,9 +60,9 @@ class Code39{
   public String getCode(String s){
     String res=this.getCode('*');
     for(int i=0;i<s.length();i++){
-      res+=this.getCode(Character.toUpperCase(s.charAt(i)));
+      res+="0" + this.getCode(Character.toUpperCase(s.charAt(i)));
     }
-    res+=this.getCode('*');
+    res+="0" + this.getCode('*');
     return res;
   }
 }

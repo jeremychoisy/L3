@@ -1,4 +1,4 @@
-const API_TOKEN="RGAPI-86e17640-e131-42ec-84ba-e7e723985f22";
+const API_TOKEN="RGAPI-b33a8e03-dbf0-4156-bde6-83dde75d6403";
 const version = "8.21.1";
 // data
 
