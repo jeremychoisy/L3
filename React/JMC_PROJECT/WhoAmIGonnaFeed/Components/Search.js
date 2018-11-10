@@ -10,15 +10,20 @@ class Search extends React.Component{
     super(props)
     this.searched_text=""
     this.state = {
-      isLoading:false
+      isLoading:false,
+      fontLoaded:false
     }
   }
 
-  componentDidMount(){
-    Font.loadAsync({
-      'FrizQuadrata': require('../assets/fonts/FrizQuadrata.ttf')
-    });
+  async componentDidMount(){
+    await Font.loadAsync({
+      'FrizQuadrata' : require('../assets/fonts/FrizQuadrata.ttf')
+    })
+    this.setState({
+      fontLoaded:true
+    })
   }
+
   _displayLoading() {
     if (this.state.isLoading) {
       return (
@@ -61,6 +66,7 @@ class Search extends React.Component{
 
   render(){
     return(
+      this.state.fontLoaded ? (
       <View style={styles.main_container}>
         <Text style={styles.text}> Entrez votre nom d'invocateur : </Text>
         <View style={styles.input_container}>
@@ -77,7 +83,8 @@ class Search extends React.Component{
           style={styles.image}
         />
       </View>
-    )
+    ):null
+   )
   }
 }
 
@@ -89,7 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor:'black'
   },
   text:{
-    fontFamily:"FrizQuadrata",
+    fontFamily: 'FrizQuadrata',
     fontSize:18,
     marginBottom:10,
     color:'rgb(240,219,77)'

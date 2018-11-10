@@ -6,7 +6,7 @@ public class Code39Applet extends Applet {
     Code39 c = new Code39();
     Symbole s;
     IterateurSymbole i = new IterateurSymbole(c.getCode("JAVA 2012"));
-    int x = 5;
+    int x = 25;
 
     while(!i.estTerminee())
     {

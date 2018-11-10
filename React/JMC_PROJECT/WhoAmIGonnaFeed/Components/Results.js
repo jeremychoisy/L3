@@ -2,25 +2,30 @@ import React from 'react'
 import {ScrollView, View,Text,StyleSheet,Image,ActivityIndicator,FlatList} from 'react-native'
 import SummonerItem from './SummonerItem'
 import game from '../Data/gameData'
+import {Font} from 'expo'
 
 class Results extends React.Component{
   constructor(props){
     super(props)
-    this.gameMode = ""
     this.gameType = ""
     this.state={
       summoners : [],
-      isLoading: true
+      isLoading: true,
+      isFontLoaded:false
     }
   }
-  componentDidMount(){
+  async componentDidMount(){
+    await Font.loadAsync({
+      'FrizQuadrata' : require('../assets/fonts/FrizQuadrata.ttf')
+    })
     const {gameData} = this.props.navigation.state.params
 
-    this.gameMode = gameData.gameMode;
     this.gameType = game[game.findIndex(item => item.id == gameData.gameQueueConfigId)].type;
+
     this.setState({
       summoners : gameData.participants,
-      isLoading:false
+      isLoading:false,
+      isFontLoaded:true
     })
   }
 
@@ -35,9 +40,10 @@ class Results extends React.Component{
   }
   render(){
     return(
+      this.state.isFontLoaded ?(
       <ScrollView style={styles.main_container}>
         {this._displayLoading()}
-        <Text style={styles.text_header}>{this.gameMode} | {this.gameType}</Text>
+        <Text style={styles.text_header}>{this.gameType}</Text>
         <View style={styles.second_container}>
           <View style={styles.team_one}>
             <FlatList
@@ -57,7 +63,7 @@ class Results extends React.Component{
           />
           </View>
         </View>
-      </ScrollView>
+      </ScrollView>) : null
     )
   }
 }
@@ -91,6 +97,7 @@ const styles=StyleSheet.create({
     backgroundColor:'red',
   },
   text_header:{
+    fontFamily: 'FrizQuadrata',
     textAlign:"center",
     fontSize:16,
     fontWeight:'bold',

@@ -10,7 +10,8 @@ class SummonerItem extends React.Component{
     this.state = {
       sumData:undefined,
       leagueData: undefined,
-      isLoading:true
+      isLoading:true,
+      dataLoaded:false
     }
   }
 
@@ -21,7 +22,8 @@ class SummonerItem extends React.Component{
         this.setState({
           sumData:sumData,
           leagueData:data,
-          isLoading:false
+          isLoading:false,
+          dataLoaded:true
         })
       })
     })
@@ -155,7 +157,7 @@ class SummonerItem extends React.Component{
     const {sumData} = this.state
     const champIndex = champs.findIndex(item => item.id == this.props.summoner.championId)
 
-    if(sumData !== undefined){
+    if(this.state.dataLoaded){
       return(
         <View style={styles.scrollview_container}>
           <View style={styles.summoner}>
