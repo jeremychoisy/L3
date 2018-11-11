@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 class SearchHistoryItem extends React.Component{
 
+// call Api then navigate to the Results View
   _displayResults = (nomSum) =>{
     getSum(nomSum).then((sumData)=>{
       getCurrentMatch(sumData.id).then((gameData)=>{
@@ -19,6 +20,7 @@ class SearchHistoryItem extends React.Component{
     })
   }
 
+// Remove summoner name from the store
   _removeItem(nomSum){
       const action = { type: "REMOVE_ITEM", value: nomSum }
       this.props.dispatch(action)
@@ -42,11 +44,13 @@ class SearchHistoryItem extends React.Component{
   }
 }
 
+// StyleSheet
 const styles = StyleSheet.create({
   mainContainer:{
     height:30,
     flex:1,
-    flexDirection:'row'
+    flexDirection:'row',
+    marginBottom:5
   },
   viewSummonerName:{
     flex:1,
@@ -55,9 +59,11 @@ const styles = StyleSheet.create({
   textSummonerName:{
     fontSize:15,
     textAlign:'center',
-    fontWeight:'bold'
+    fontWeight:'bold',
+    color:'rgb(240,219,77)'
   },
   deleteSummonerName:{
+    backgroundColor:'rgb(240,219,77)',
     width:30
   },
   icon:{
@@ -66,6 +72,7 @@ const styles = StyleSheet.create({
   }
 })
 
+// Connect to the store
 const mapStateToProps = state =>{
   return{
     searchHistory : state.searchHistory

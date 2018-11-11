@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Button, TextInput, Text, StyleSheet, ActivityIndicator, Alert, Image} from 'react-native'
+import {View, TextInput, Text, StyleSheet, ActivityIndicator, Alert, Image,TouchableOpacity} from 'react-native'
 import {getSum, getCurrentMatch} from '../API/RIOTApi'
 import {connect} from 'react-redux'
 import {Font} from 'expo'
@@ -8,26 +8,16 @@ import {Font} from 'expo'
 class Search extends React.Component{
   constructor(props){
     super(props)
-    this.searched_text=""
+    this.searchedText=""
     this.state = {
-      isLoading:false,
-      fontLoaded:false
+      isLoading:false
     }
   }
-
-  async componentDidMount(){
-    await Font.loadAsync({
-      'FrizQuadrata' : require('../assets/fonts/FrizQuadrata.ttf')
-    })
-    this.setState({
-      fontLoaded:true
-    })
-  }
-
+// display loading icon
   _displayLoading() {
     if (this.state.isLoading) {
       return (
-        <View style={styles.loading_container}>
+        <View style={styles.loadingContainer}>
           <ActivityIndicator size='large' />
         </View>
       )
@@ -35,14 +25,15 @@ class Search extends React.Component{
   }
 
   _searchTextInputChanged(text){
-    this.searched_text=text
+    this.searchedText=text
   }
-
+// add summoner name to the Store
   _addSearchHistory(nomSum) {
     const action = { type: "ADD_ITEM", value: nomSum }
     this.props.dispatch(action)
   }
 
+// Call API then navigate to the Results view
   _displayResults = (nomSum) =>{
     this.setState({
       isLoading:true
@@ -64,53 +55,60 @@ class Search extends React.Component{
     })
   }
 
+// Render
   render(){
     return(
-      this.state.fontLoaded ? (
-      <View style={styles.main_container}>
+      <View style={styles.mainContainer}>
         <Text style={styles.text}> Entrez votre nom d'invocateur : </Text>
-        <View style={styles.input_container}>
+        <View style={styles.inputContainer}>
         <TextInput
-            style={styles.textInput}
             placeholder="Summoner name"
             onChangeText={(text)=>this._searchTextInputChanged(text)}
-            onSubmitEditing={()=>this._displayResults(this.searched_text)}
+            onSubmitEditing={()=>this._displayResults(this.searchedText)}
             underlineColorAndroid="transparent"/>
         </View>
-        <Button style={styles.button} title='Go !'onPress={()=>this._displayResults(this.searched_text)}/>
+        <TouchableOpacity style={styles.search} onPress={()=>this._displayResults(this.searchedText)}>
+          <Image
+          source={require('../Images/ic_search.png')}
+          style={styles.icon}
+          />
+        </TouchableOpacity>
         <Image
           source={require('../Images/evil.jpg')}
           style={styles.image}
         />
       </View>
-    ):null
    )
   }
 }
 
 
+//StyleSheet
 
 const styles = StyleSheet.create({
-  main_container:{
+  mainContainer:{
     flex:1,
-    backgroundColor:'black'
+    backgroundColor:'black',
   },
   text:{
-    fontFamily: 'FrizQuadrata',
     fontSize:18,
     marginBottom:10,
     color:'rgb(240,219,77)'
   },
-  input_container:{
+  inputContainer:{
     backgroundColor:'white',
     marginBottom:20
   },
-  input_text:{
-
+  search:{
+    backgroundColor:'rgb(240,219,77)',
+    alignItems:'center',
+    height:30
   },
-  button:{
+  icon:{
+    width:30,
+    height:30
   },
-  loading_container: {
+  loadingContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -125,6 +123,7 @@ const styles = StyleSheet.create({
   }
 })
 
+// Connect to the Store
 const mapStateToProps = state =>{
   return{
     searchHistory : state.searchHistory

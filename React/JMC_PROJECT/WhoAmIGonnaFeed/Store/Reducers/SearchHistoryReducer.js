@@ -1,6 +1,7 @@
 const initialState = { searchHistory : []}
 
-function modifySearchHistory( state = initialState, action){
+// reducer function ModifysearchHistory
+function ModifySearchHistory( state = initialState, action){
   let nextState
   const itemIndex = state.searchHistory.findIndex(item => item === action.value)
   switch(action.type){
@@ -23,4 +24,4 @@ function modifySearchHistory( state = initialState, action){
     }
   }
 
-  export default modifySearchHistory
+  export default ModifySearchHistory
