@@ -4,7 +4,7 @@ if(isset($_POST['recherche']))
 {
   $rue = enlever_accent($_POST['rue'] );
   $ville = enlever_accent($_POST['ville'] );
-  $string = "http://nominatim.openstreetmap.org/search?q=".$_POST['numero'] .",".urlencode($rue).",".urlencode($ville)."&format=json";
+  $string = "http://nominatim.openstreetmap.org/search?q=".$_POST['numero'] .",".urlencode($rue).",".urlencode($ville).",%20France,&format=json";
   $opts = array('http'=>array('header'=>"User-Agent: StevesCleverAddressScript 3.7.6\r\n"));
   $context = stream_context_create($opts);
   $json_source = file_get_contents($string,false,$context);
@@ -21,6 +21,7 @@ if(isset($_POST['recherche']))
             '>
             <p> Non supporté par votre navigateur </p>
             </iframe>';
+      $str.= '<p><b>'.$json_result[$i]->{'display_name'}.'</b><p>';
       echo $str;
       echo display_meteo($url_meteo);
     }
@@ -41,7 +42,7 @@ function display_meteo($url){
     else {
       $date = date("Y-m-d ").$i.':00:00';
     }
-    $str .= '<b> Météo au '.$date.'</b></br> Température : '.($json_result->{$date}->{'temperature'}->{'2m'}-273.15).'°</br>Humidité : '.$json_result->{$date}->{'humidite'}->{'2m'}.'%</br>Précipitation : '.$json_result->{$date}->{'pluie'}.'mm</br>Vitesse du vent: '.$json_result->{$date}->{'vent_moyen'}->{'10m'}.'</br>';
+    $str .= '<b> Météo au '.$date.'</b></br> Température : '.($json_result->{$date}->{'temperature'}->{'sol'}-273.15).'°</br>Humidité : '.$json_result->{$date}->{'humidite'}->{'2m'}.'%</br>Précipitation : '.$json_result->{$date}->{'pluie'}.'mm</br>Vitesse du vent: '.$json_result->{$date}->{'vent_moyen'}->{'10m'}.' km/h</br>';
     if($json_result->{$date}->{'pluie'}>0){
       $str .= '<img src="./images/rain.png" alt="Rain">';
     }
@@ -87,7 +88,7 @@ function enlever_accent($str)
 
  <html>
   <head>
-    <title>METEO</title>
+    <title>WeatherMap</title>
     <meta charset="'."utf-8".'">
     <link rel="stylesheet" href="./style.css" type="text/css">
     <h1> WeatherMap </h1>

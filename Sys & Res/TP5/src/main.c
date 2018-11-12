@@ -15,6 +15,7 @@
 #include "util.h"
 #include "id3_tagheader.h"
 #include "id3_frame.h"
+#include "dirent.h"
 
 
 /*=====================================================*/
@@ -23,6 +24,47 @@
    On rend la position en fin de lecture : normalement
    on devrait etre en fin de tag.
 */
+char ** ls_mp3files_inarray (char* extension){
+  char ** tab_result = NULL;
+  DIR  *dd ;
+
+  struct dirent *entree;
+
+  int compt = 0;
+  int i =0;
+
+  char * point = NULL;
+  char * dpath = "./mp3";
+
+  dd = opendir(dpath);
+  if ( dd == NULL ) {
+    fprintf (stderr ," Ouverture répertoire impossible .\n",dpath) ;
+    return EXIT_FAILURE;
+  }
+  while ( (entree = readdir(dd)) != NULL ) {
+    if((point = strrchr(entree->d_name,'.')) != NULL ) {
+     if(strcmp(point,".mp3") == 0) {
+              compt += 1;
+      }
+    }
+  }
+  rewinddir(dd);
+  tab_result = malloc(sizeof(char*)*(compt+1));
+  while ( (entree = readdir(dd)) != NULL ) {
+    if((point = strrchr(entree->d_name,'.')) != NULL ) {
+     if(strcmp(point,".mp3") == 0) {
+              tab_result[i] = entree->d_name;
+              printf("tab[%d]: %s\n" ,i, tab_result[i]) ;
+              i++;
+      }
+    }
+  }
+  //tab_result[i]=NULL;
+  printf("%s\n",tab_result[0]);
+  closedir(dd);
+  return tab_result;
+}
+
 
 int mp3_get_frame_from_id (int fd ,char *id , char *content){
   frame_header fh;
@@ -42,7 +84,6 @@ int mp3_get_frame_from_id (int fd ,char *id , char *content){
   /* Si nb_lu == 10 alors id3_read_frame_header s'est bien passé,
   donc la frame recherchée a été trouvée */
   if(nb_lu==10){
-    content = malloc(sizeof(char)*50);
     if(!content){
       printf("ERROR");
     }
@@ -53,7 +94,6 @@ int mp3_get_frame_from_id (int fd ,char *id , char *content){
       return -1;
     }
     /* sinon */
-    printf("%s",content);
     strcat(content,"\0");
     return 0;
   }
@@ -93,10 +133,11 @@ off_t mp3_read(int fd){
 /*=====================================================*/
 
 int main(int argc, char *argv[]){
- FILE *f;
+  FILE *f;
   char *filename;
   int nb_lu;
   int i;
+  char **tab;
   /* Verification de l'appel du programme ----*/
   if (argc != 2){ /* usage -- print usage message and exit */
     fprintf(stderr, "Usage: %s mp3file\n", argv[0]);
@@ -112,9 +153,14 @@ int main(int argc, char *argv[]){
   }
 
   int fd = fileno(f); /* Get descriptor from FILE * */
-  char *content;
+  char *content = malloc(sizeof(char)*50);
   /* 1) Parcours d'un fichier mp3 */
-
+  tab = ls_mp3files_inarray (".mp3");
+  i = 0 ;
+  /*while ( tab[i] != NULL ) {
+    printf("tab[%d]: %s\n" ,i, tab[i]) ;
+    i++;
+  }*/
   mp3_get_frame_from_id(fd ,"TIT2",content);
   //mp3_read(fd);
   printf("%s",content);
