@@ -76,8 +76,8 @@ class SummonerItem extends React.Component{
  // Display league and rank
   _displayRank(){
     if(this.state.leagueData !== undefined){
-      console.log('DEFINED')
-      if(this.state.leagueData.length !== 0 ){      console.log('!=0')
+      if(this.state.leagueData.length !== 0 && this.state.leagueData[0].tier !== undefined ){
+        console.log(this.state.leagueData[0].tier)
         return(
           <View style={styles.sumRank}>
             <Text style={styles.league}> {this.state.leagueData[0].tier} {this.state.leagueData[0].rank} </Text>

@@ -13,6 +13,7 @@ class SearchHistory extends React.Component{
   render(){
     return(
       <ScrollView style={styles.mainContainer}>
+      // List of components SearchHistoryItem
         <FlatList
         data= {this.props.searchHistory}
         keyExtractor={(item) => item.toString()}

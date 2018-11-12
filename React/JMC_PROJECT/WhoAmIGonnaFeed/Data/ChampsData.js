@@ -258,7 +258,7 @@ export default data = [
     "name" : "Warwick"
   },
     { "id" : 62,
-    "name" : "Wukong"
+    "name" : "MonkeyKing"
   },
     { "id" : 101,
     "name" : "Xerath"
