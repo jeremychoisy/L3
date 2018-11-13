@@ -1,7 +1,7 @@
 all : main.o id3_frame.o id3_tagheader.o util.o
 	gcc main.o id3_frame.o id3_tagheader.o util.o -o id3
 
-util.o : ./src/util.c 
+util.o : ./src/util.c
 	gcc -c ./src/util.c -I ./include
 
 main.o : ./src/main.c
@@ -17,4 +17,4 @@ clean:
 	rm *.o id3
 
 run :
-	./id3 ./mp3/track1.mp3
+	./id3 ./mp3

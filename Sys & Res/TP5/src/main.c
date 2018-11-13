@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <dirent.h>
 #include <string.h>
 #include <arpa/inet.h>
@@ -17,14 +18,16 @@
 #include "id3_frame.h"
 #include "dirent.h"
 
-
+int mp3_get_frame_from_id (int fd ,char *id , char *content);
+char ** ls_mp3files_inarray (char* extension, char* pathname);
+char * mp3_get_album_title(int fd);
 /*=====================================================*/
 /* Pour comprendre comment parcourir un fichier mp3.
 
    On rend la position en fin de lecture : normalement
    on devrait etre en fin de tag.
 */
-char ** ls_mp3files_inarray (char* extension){
+char ** ls_mp3files_inarray (char* extension, char * pathname){
   char ** tab_result = NULL;
   DIR  *dd ;
 
@@ -33,13 +36,13 @@ char ** ls_mp3files_inarray (char* extension){
   int compt = 0;
   int i =0;
 
-  char * point = NULL;
-  char * dpath = "./mp3";
+  char * point = NULL;;
+  char * buff;
 
-  dd = opendir(dpath);
+  dd = opendir(pathname);
   if ( dd == NULL ) {
-    fprintf (stderr ," Ouverture répertoire impossible .\n",dpath) ;
-    return EXIT_FAILURE;
+    fprintf (stderr ," Ouverture répertoire impossible .\n",pathname) ;
+    return NULL;
   }
   while ( (entree = readdir(dd)) != NULL ) {
     if((point = strrchr(entree->d_name,'.')) != NULL ) {
@@ -48,23 +51,42 @@ char ** ls_mp3files_inarray (char* extension){
       }
     }
   }
-  rewinddir(dd);
-  tab_result = malloc(sizeof(char*)*(compt+1));
-  while ( (entree = readdir(dd)) != NULL ) {
-    if((point = strrchr(entree->d_name,'.')) != NULL ) {
-     if(strcmp(point,".mp3") == 0) {
-              tab_result[i] = entree->d_name;
-              printf("tab[%d]: %s\n" ,i, tab_result[i]) ;
-              i++;
+
+  if(compt != 0){
+    rewinddir(dd);
+    tab_result = malloc(sizeof(char*)*(compt+1));
+    while ( (entree = readdir(dd)) != NULL ) {;
+      if((point = strrchr(entree->d_name,'.')) != NULL ) {
+        if(strcmp(point,".mp3") == 0) {
+          buff=malloc(sizeof(char)*strlen(entree->d_name));
+          strcpy(buff,entree->d_name);
+          tab_result[i] = buff;
+          i++;
+        }
       }
     }
+    tab_result[i]=NULL;
   }
-  //tab_result[i]=NULL;
-  printf("%s\n",tab_result[0]);
   closedir(dd);
   return tab_result;
 }
 
+/******************************************************************************/
+
+char * mp3_get_album_title(int fd){
+  char * content = malloc(sizeof(char)*100);
+  int cr;
+  cr = mp3_get_frame_from_id(fd,"TALB", content);
+  if(cr==-1){
+    perror("Nom de l'album introuvable");
+    return NULL;
+  }
+  /*  On remet la la tête de lecture au début du fichier */
+  lseek(fd,0,SEEK_SET);
+  return content;
+}
+
+/******************************************************************************/
 
 int mp3_get_frame_from_id (int fd ,char *id , char *content){
   frame_header fh;
@@ -85,8 +107,9 @@ int mp3_get_frame_from_id (int fd ,char *id , char *content){
   donc la frame recherchée a été trouvée */
   if(nb_lu==10){
     if(!content){
-      printf("ERROR");
+      perror("Frame introuvable");
     }
+    lseek(fd, 1, SEEK_CUR);
     /* on stock le contenu dans content */
     nb_lu = read_error(fd, content, fh.tailleframe, "Read Frame Content");
     /* Si le nombre lu ne correspond pas à la taille attendue du contenu */
@@ -95,12 +118,15 @@ int mp3_get_frame_from_id (int fd ,char *id , char *content){
     }
     /* sinon */
     strcat(content,"\0");
+    lseek(fd,0,SEEK_SET);
     return 0;
   }
   /* Si l'id n'a pas été trouvé */
   else
   {
     printf("Contenu introuvable.\n");
+    /*  On remet la la tête de lecture au début du fichier */
+    lseek(fd,0,SEEK_SET);
     return 0;
   }
 }
@@ -134,37 +160,100 @@ off_t mp3_read(int fd){
 
 int main(int argc, char *argv[]){
   FILE *f;
-  char *filename;
+  char *pathname="";
   int nb_lu;
-  int i;
+  int i = 0;
   char **tab;
+  char *filepath;
+  char *new_rep;
+  char *album, *title, *track;
+  char *old_file, *new_file;
   /* Verification de l'appel du programme ----*/
   if (argc != 2){ /* usage -- print usage message and exit */
-    fprintf(stderr, "Usage: %s mp3file\n", argv[0]);
+    fprintf(stderr, "%s : missing argument, pathname expected.\n", argv[0]);
     exit(1);
   }
   else
-    filename = argv[1];
+    pathname = argv[1];
 
-  /* Ouverture du fichier --------------------*/
-  if (! (f = fopen(filename, "r"))){
-    perror(filename);
+  /* Récupération des fichiers mp3 dans le répertoire cible */
+  tab = ls_mp3files_inarray (".mp3",pathname);
+  if (tab == NULL){
+    fprintf(stderr, "%s : Couldn't find any mp3 files in the repository.\n", argv[0]);
+    exit(0);
+  }
+  filepath = malloc(sizeof(char)*50);
+  /* construction du chemin du premier ficher */
+  strcpy(filepath,pathname);
+  strcat(filepath,"/");
+  strcat(filepath,tab[0]);
+
+  /* Ouverture du premier fichier --------------------*/
+  if (! (f = fopen(filepath, "r"))){
+    perror(filepath);
     exit(1);
   }
 
   int fd = fileno(f); /* Get descriptor from FILE * */
-  char *content = malloc(sizeof(char)*50);
-  /* 1) Parcours d'un fichier mp3 */
-  tab = ls_mp3files_inarray (".mp3");
-  i = 0 ;
-  /*while ( tab[i] != NULL ) {
-    printf("tab[%d]: %s\n" ,i, tab[i]) ;
-    i++;
-  }*/
-  mp3_get_frame_from_id(fd ,"TIT2",content);
+
+  /* récupération du nom de l'album dans le 1er fichier */
+  album = mp3_get_album_title(fd);
+
+  new_rep = malloc(sizeof(char)*(strlen(album)+strlen(pathname)+1));
+
+  /* construction du chemin du nouveau répertoire */
+  strcpy(new_rep,pathname);
+  strcat(new_rep,"/");
+  strcat(new_rep,album);
+
+  /* création du nouveau répertoire nommé d'aprés le nom de l'album */
+  mkdir(new_rep,ACCESSPERMS);
+//  mp3_get_frame_from_id(fd ,"TIT2",content);
   //mp3_read(fd);
-  printf("%s",content);
-  printf("\n");
+  fclose(f);
+
+  old_file = malloc(sizeof(char)*50);
+  new_file = malloc(sizeof(char)*50);
+  title = malloc(sizeof(char)*50);
+  track = malloc(sizeof(char)*50);
+
+  while(tab[i]!=NULL){
+    /* construction du chemin de chaque fichier */
+    strcpy(old_file,pathname);
+    strcat(old_file,"/");
+    strcat(old_file,tab[i]);
+
+    /* Ouverture du fichier --------------------*/
+    if (! (f = fopen(old_file, "r"))){
+      perror(old_file);
+      exit(1);
+    }
+
+    fd = fileno(f); /* Get descriptor from FILE * */
+
+    mp3_get_frame_from_id(fd,"TIT2",title);
+    mp3_get_frame_from_id(fd,"TRCK",track);
+    /* construction du nouveau chemin et nom du fichier */
+    strcpy(new_file,new_rep);
+    strcat(new_file,"/");
+    strcat(new_file,title);
+    strcat(new_file,"_");
+    strcat(new_file,track);
+    strcat(new_file,".mp3");
+
+    rename(old_file,new_file);
+
+    fclose(f);
+    i++;
+
+  }
+
+  free(filepath);
+  free(old_file);
+  free(new_file);
+  free(title);
+  free(track);
+
   sync();
 
   return 0;

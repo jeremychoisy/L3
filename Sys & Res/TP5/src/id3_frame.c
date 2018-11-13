@@ -16,7 +16,7 @@
 #include "id3_tagheader.h"
 #include "id3_frame.h"
 
-#include "genre.c" /* definit la variable "genre" pour
+#include "genre.h" /* definit la variable "genre" pour
 		      les frames "TCON" */
 /*============================================*/
 /* Analyse d'un header de frame :
