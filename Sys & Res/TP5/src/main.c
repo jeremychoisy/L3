@@ -92,6 +92,7 @@ int mp3_get_frame_from_id (int fd ,char *id , char *content){
   frame_header fh;
   tag_header th;
   int nb_lu;
+  char *frame_id;
 
   /* On recupere les infos du tag, notamment la taille du tag */
   nb_lu = id3_read_tagheader(fd, &th);
@@ -99,9 +100,18 @@ int mp3_get_frame_from_id (int fd ,char *id , char *content){
 
   /* On recherche la frame correspondant à notre id */
   nb_lu = id3_read_frame_header(fd, &fh, th.tailletag);
-  while(strcmp(fh.id,id)!=0 && nb_lu==10){
+
+  frame_id=malloc(sizeof(char)*10);
+  /* On transforme l'id en string */
+  strcpy(frame_id,fh.id);
+  strcat(frame_id,"\0");
+
+  while(strcmp(frame_id,id)!=0 && nb_lu==10){
     lseek(fd, fh.tailleframe, SEEK_CUR);
     nb_lu = id3_read_frame_header(fd, &fh, th.tailletag);
+
+    strcpy(frame_id,fh.id);
+    strcat(frame_id,"\0");
   }
   /* Si nb_lu == 10 alors id3_read_frame_header s'est bien passé,
   donc la frame recherchée a été trouvée */
@@ -179,7 +189,7 @@ int main(int argc, char *argv[]){
   /* Récupération des fichiers mp3 dans le répertoire cible */
   tab = ls_mp3files_inarray (".mp3",pathname);
   if (tab == NULL){
-    fprintf(stderr, "%s : Couldn't find any mp3 files in the repository.\n", argv[0]);
+    printf( "%s : Couldn't find any mp3 files in the repository.\n", argv[0]);
     exit(0);
   }
   filepath = malloc(sizeof(char)*50);
@@ -241,18 +251,19 @@ int main(int argc, char *argv[]){
     strcat(new_file,track);
     strcat(new_file,".mp3");
 
-    rename(old_file,new_file);
+    if(rename(old_file,new_file)==-1){
+      perror("rename");
+      exit(1);
+    }
+
+    printf("%s => %s\n",old_file,new_file);
 
     fclose(f);
     i++;
 
   }
 
-  free(filepath);
-  free(old_file);
-  free(new_file);
-  free(title);
-  free(track);
+  printf("Success !\n");
 
   sync();
 
