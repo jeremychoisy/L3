@@ -101,7 +101,7 @@ int mp3_get_frame_from_id (int fd ,char *id , char *content){
   /* On recherche la frame correspondant à notre id */
   nb_lu = id3_read_frame_header(fd, &fh, th.tailletag);
 
-  frame_id=malloc(sizeof(char)*10);
+  frame_id=malloc(sizeof(char)*5);
   /* On transforme l'id en string */
   strcpy(frame_id,fh.id);
   strcat(frame_id,"\0");
