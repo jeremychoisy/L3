@@ -1,36 +1,7 @@
 
-window.onload = toc_4;
+window.onload = toc;
 
-
-function toc_3(){
-  var table = document.createElement("table");
-  var titles = document.getElementsByTagName("h1");
-  var link,cell;
-  for(var i=0;i<titles.length;i++){
-    cell = document.createElement("tr");
-    link = document.createElement("a");
-    if(titles[i].id === "") {
-      titles[i].setAttribute("id",titles[i].innerText);
-    }
-    link.setAttribute("href","#"+titles[i].id);
-    link.innerText = titles[i].innerText;
-    cell.appendChild(link);
-
-    cell.addEventListener('mouseover', function(event){
-    document.getElementById(this.firstChild.getAttribute("href").substr(1,this.firstChild.getAttribute("href").length-1)).setAttribute("style","background-color:red;");
-    },false);
-
-    cell.addEventListener('mouseleave', function(event){
-    document.getElementById(this.firstChild.getAttribute("href").substr(1,this.firstChild.getAttribute("href").length-1)).removeAttribute("style","background-color:red;");
-    },false);
-
-    table.appendChild(cell);
-  }
-  var firstChild = document.body.firstChild;
-  document.body.insertBefore(table,firstChild);
-}
-
-function toc_4(){
+function toc(){
   var link,cell;
   var table = document.createElement("table");
   var elem = document.body.firstChild;
@@ -51,6 +22,7 @@ function toc_4(){
     elem = elem.nextSibling;
   }
   var firstChild = document.body.firstChild;
+  table.setAttribute("style","float:right;border:1px solid black;");
   document.body.insertBefore(table,firstChild);
 }
 
@@ -61,10 +33,10 @@ function addEventListeners(node,tagname){
     var backgroundColor = 'background-color:green;';
   }
   node.addEventListener('mouseover', function(event){
-  document.getElementById(this.firstChild.getAttribute("href").substr(1,this.firstChild.getAttribute("href").length-1)).setAttribute("style",backgroundColor);
+  document.getElementById(this.firstChild.getAttribute("href").slice(1)).setAttribute("style",backgroundColor);
   },false);
 
   node.addEventListener('mouseleave', function(event){
-  document.getElementById(this.firstChild.getAttribute("href").substr(1,this.firstChild.getAttribute("href").length-1)).removeAttribute("style",backgroundColor);
+  document.getElementById(this.firstChild.getAttribute("href").slice(1)).removeAttribute("style",backgroundColor);
   },false);
 }
