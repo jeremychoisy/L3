@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 abstract class AFormeGeometrique{
   protected Point pointAncrage;
 
@@ -16,4 +18,5 @@ abstract class AFormeGeometrique{
 
   public abstract double getAire();
   public abstract double getPerimetre();
+  public abstract void dessineToi(Graphics g);
 }

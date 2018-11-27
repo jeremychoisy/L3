@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 class Rectangle extends AFormeGeometrique{
   double largeur, hauteur;
 
@@ -13,6 +15,11 @@ class Rectangle extends AFormeGeometrique{
 
   public double getPerimetre(){
     return this.largeur+this.hauteur;
+  }
+
+  public void dessineToi(Graphics g) {
+    g.drawRect((int) this.pointAncrage.getX(), (int) this.pointAncrage.getY(), (int) this.largeur,
+        (int) this.hauteur);
   }
 
   public String toString(){

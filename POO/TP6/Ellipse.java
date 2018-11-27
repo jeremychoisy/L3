@@ -1,4 +1,5 @@
 import static java.lang.Math.*;
+import java.awt.Graphics;
 
 class Ellipse extends AFormeGeometrique{
   private double petitRayon;
@@ -16,6 +17,10 @@ class Ellipse extends AFormeGeometrique{
 
   public double getPerimetre(){
     return PI*sqrt(2*(pow(this.petitRayon,2)+pow(this.grandRayon,2)));
+  }
+  
+  public void dessineToi(Graphics g) {
+    g.drawOval((int) this.pointAncrage.getX(), (int) this.pointAncrage.getY(), (int) this.petitRayon, (int) this.grandRayon);
   }
 
   public String toString(){

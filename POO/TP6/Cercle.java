@@ -1,4 +1,5 @@
 import static java.lang.Math.*;
+import java.awt.Graphics;
 
 class Cercle extends AFormeGeometrique{
   private double rayon;
@@ -14,6 +15,10 @@ class Cercle extends AFormeGeometrique{
 
   public double getPerimetre(){
     return 2*PI*this.rayon;
+  }
+  
+  public void dessineToi(Graphics g) {
+    g.drawOval((int)this.pointAncrage.getX(), (int)this.pointAncrage.getY(), (int)this.rayon, (int)this.rayon);
   }
 
   public String toString(){

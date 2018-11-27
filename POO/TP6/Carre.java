@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 class Carre extends AFormeGeometrique{
   private double longueurCote;
 
@@ -11,6 +13,10 @@ class Carre extends AFormeGeometrique{
 
   public double getPerimetre(){
     return this.longueurCote*2;
+  }
+
+  public void dessineToi(Graphics g){
+    g.drawRect((int)this.pointAncrage.getX(), (int)this.pointAncrage.getY(), (int)this.longueurCote, (int)this.longueurCote);
   }
 
   public String toString(){
