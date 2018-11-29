@@ -1,17 +1,28 @@
 import java.awt.Graphics;
+import java.awt.Color;
 import java.applet.Applet;
 
 public class AppletForme extends Applet {
     
     public void paint(Graphics g) {
-        Point p = new Point(50, 50);
-        Carre ca = new Carre(p, 50);
-        Rectangle r = new Rectangle(p, 70, 35);
-        Cercle c = new Cercle(p, 40);
-        Ellipse e = new Ellipse(p, 80, 50);
+        Point Pca = new Point(50, 50);
+        Carre ca = new Carre(Pca, 50, Color.BLUE, Color.BLACK);
+
+        Point Pr = new Point(150,50);
+        Rectangle r = new Rectangle(Pr, 70, 35, Color.YELLOW, Color.BLACK);
+
+        Point Pc = new Point(300,100);
+        Cercle c = new Cercle(Pc, 40, Color.RED, Color.BLACK,Alignement.COINSUPGAUCHE);
+
+        Point Pc2 = new Point(300,100);
+        Cercle c2 = new Cercle(Pc2, 40, Color.RED, Color.BLACK, Alignement.COININFDROIT);
+
+        Point Pe = new Point(500,100);
+        Ellipse e = new Ellipse(Pe, 80, 50, Color.BLUE, Color.RED);
 
         ca.dessineToi(g);   
         c.dessineToi(g);
+        c2.dessineToi(g);
         r.dessineToi(g);
         e.dessineToi(g);
     }

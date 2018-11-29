@@ -14,6 +14,31 @@ function ask(str) {
                tr.innerText = item[0];
                if(item[1] == "dir"){
                    tr.setAttribute("style","color:green;")
+                   tr.onclick = (
+                       (function (tr) {
+                           return function () {
+                               ask(str + '/' + tr.innerText);
+                           };
+                       })
+                           (tr));
+               }
+               else
+               {
+                   tr.onclick = (
+                       (function (tr) {
+                           return function () {
+                               if (event.button <= 1) {
+                                   try {
+                                       displayFile(str + '/' + tr.innerText);
+                                   } finally {
+                                       event.stopPropagation();
+                                       event.preventDefault();
+                                   }
+                               }
+
+                           };
+                       })
+                           (tr));
                }
                table.appendChild(tr);
             })

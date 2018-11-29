@@ -5,8 +5,10 @@ function toc(){
   var link,cell;
   var table = document.createElement("table");
   var elem = document.body.firstChild;
+  console.log(elem);
 
   while(elem){
+    console.log(elem.tagName);
     if(elem.tagName === 'H1' || elem.tagName === 'H2'){
       cell = document.createElement("tr");
       link = document.createElement("a");

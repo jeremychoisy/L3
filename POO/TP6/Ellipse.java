@@ -1,12 +1,19 @@
 import static java.lang.Math.*;
 import java.awt.Graphics;
+import java.awt.Color;
 
 class Ellipse extends AFormeGeometrique{
   private double petitRayon;
   private double grandRayon;
 
-  public Ellipse(Point p, double pR, double gR){
-    super(p);
+  public Ellipse(Point p, double pR, double gR, Color cFond, Color cDessin){
+    super(p, cFond, cDessin, Alignement.CENTRE);
+    this.petitRayon = pR;
+    this.grandRayon = gR;
+  }
+
+  public Ellipse(Point p, double pR, double gR, Color cFond, Color cDessin, Alignement a){
+    super(p, cFond, cDessin, a);
     this.petitRayon = pR;
     this.grandRayon = gR;
   }
@@ -20,7 +27,10 @@ class Ellipse extends AFormeGeometrique{
   }
   
   public void dessineToi(Graphics g) {
-    g.drawOval((int) this.pointAncrage.getX(), (int) this.pointAncrage.getY(), (int) this.petitRayon, (int) this.grandRayon);
+    g.setColor(this.couleurFond);
+    g.fillOval((int) this.pointAncrage.getX(), (int) this.pointAncrage.getY(), (int)(2*this.petitRayon), (int)(2*this.grandRayon));
+    g.setColor(this.couleurDessin);
+    g.drawOval((int) this.pointAncrage.getX(), (int) this.pointAncrage.getY(), (int)(2*this.petitRayon), (int)(2*this.grandRayon));
   }
 
   public String toString(){

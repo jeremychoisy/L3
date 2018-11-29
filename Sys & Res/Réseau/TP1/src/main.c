@@ -72,13 +72,14 @@ int main(int argc, char *argv[])
         {
         case 'A':
             // COMPLETEZ LE CODE
-            if(head == NULL && bhead == NULL)
+            if(ligne == 0)
             {
+                ligne = 1;
                 insertEvent(&head, ++callerID, 'D', prevTime + expntl(SERV_TIME));
             }
-            else if(head == NULL)
+            else if(ligne == 1)
             {
-                popBuffer(f, &head, &bhead, &busyTime, &residenceTime, &waitingTime, &currentTime);
+                insertEvent(&bhead, ++callerID, 'A', prevTime));
             }
             insertEvent(&head, ++callerID, 'A', prevTime + expntl(ARR_TIME));
 
@@ -91,6 +92,11 @@ int main(int argc, char *argv[])
                 break;
         case 'D':
             departures++;
+            popEvent(&head);
+            ligne = 0;
+            if(bhead != NULL){
+                popBuffer(f, &head, &bhead, &busyTime, &residenceTime, &waitingTime, currentTime)
+            }
             // COMPLETEZ LE CODE
 
             if (departures == MAX) // Uncomment this to make use of the number of requests
