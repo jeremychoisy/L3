@@ -29,6 +29,7 @@ class Cercle extends AFormeGeometrique{
       case CENTRE:
         p.setX(p.getX()-(int)this.rayon);
         p.setY(p.getY()-(int)this.rayon);  
+        break;
       case COINSUPDROIT:
         p.setX(p.getX()-(int)(2*this.rayon));
         break;

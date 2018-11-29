@@ -104,7 +104,7 @@ int popBuffer(FILE *f, node_t **head, node_t **bhead, double *busyTime, double *
         return -1;
     }
 
-    insertEvent(*head, (*bhead)->callerID, (*bhead)->event, (*bhead)->time);
+    insertEvent(head, (*bhead)->callerID, (*bhead)->event, (*bhead)->time);
 
     // COMPLETEZ LE CODE
 

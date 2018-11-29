@@ -27,10 +27,29 @@ class Ellipse extends AFormeGeometrique{
   }
   
   public void dessineToi(Graphics g) {
+    Point p = new Point((int) this.pointAncrage.getX(), (int) this.pointAncrage.getY());
+    switch (this.alignement) {
+    case CENTRE:
+      p.setX(p.getX() - (int) this.grandRayon);
+      p.setY(p.getY() - (int) this.petitRayon);
+      break;
+    case COINSUPDROIT:
+      p.setX(p.getX() - (int) (2 * this.grandRayon));
+      break;
+    case COININFGAUCHE:
+      p.setY(p.getY() - (int) (2 * this.petitRayon));
+      break;
+    case COININFDROIT:
+      p.setX(p.getX() - (int) (2 * this.grandRayon));
+      p.setY(p.getY() - (int) (2 * this.petitRayon));
+      break;
+    default:
+      break;
+    }
     g.setColor(this.couleurFond);
-    g.fillOval((int) this.pointAncrage.getX(), (int) this.pointAncrage.getY(), (int)(2*this.petitRayon), (int)(2*this.grandRayon));
+    g.fillOval((int) p.getX(), (int) p.getY(), (int)(2*this.petitRayon), (int)(2*this.grandRayon));
     g.setColor(this.couleurDessin);
-    g.drawOval((int) this.pointAncrage.getX(), (int) this.pointAncrage.getY(), (int)(2*this.petitRayon), (int)(2*this.grandRayon));
+    g.drawOval((int) p.getX(), (int) p.getY(), (int)(2*this.petitRayon), (int)(2*this.grandRayon));
   }
 
   public String toString(){
