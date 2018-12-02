@@ -15,4 +15,8 @@ if (is_dir($dir)) {
         echo json_encode($listeFichier);
     }
 }
+else if(is_file($dir)){
+    $content = file_get_contents($dir);
+    echo json_encode($content);
+}
 ?>

@@ -72,10 +72,12 @@ int main(int argc, char *argv[])
         {
         case 'A':
             // COMPLETEZ LE CODE
+            insertEvent(&head, ++callerID, 'A', (head->time) + expntl(ARR_TIME));
             if(line == 0)
-            {
+            {   
                 line = 1;
                 insertEvent(&head, head->callerID, 'D', (head->time) + expntl(SERV_TIME));
+                popEvent(&head);
             }
             else if(line == 1)
             {
@@ -87,7 +89,6 @@ int main(int argc, char *argv[])
             if (callerID < MAX) // Uncomment this to make use of the number of requests
                 // if(prevTime < SIM_TIME)		// Uncomment this to make use of the total simulation time
                 
-                insertEvent(&head, ++callerID, 'A', (head->time) + expntl(ARR_TIME));
                 
                 printf("Arrival Event\n");  // UNCOMMENT THIS TO VIEW THE FEL and the buffer
                 print_all(head,bhead);		// UNCOMMENT THIS TO VIEW THE FEL and the buffer
@@ -134,7 +135,7 @@ Result:
     printf("*  Number of completions    = %u cust      \n", departures);
     printf("*  Throughput rate          = %lf cust/sec \n", departures / prevTime);
     printf("*  Busy Time                = %lf sec      \n", busyTime);
-    printf("*  Server utilization (rho) = %lf %%   <--> THEORY:  %lf %%      \n",busyTime, 100.0 * SERV_TIME / ARR_TIME);
+    printf("*  Server utilization (rho) = %lf %%   <--> THEORY:  %lf %%      \n", 100.0 * busyTime / prevTime, 100.0 * SERV_TIME / ARR_TIME);
     printf("*  Mean residence time      = %lf sec  <--> THEORY:  %lf sec      \n", residenceTime / departures, SERV_TIME + queueing_time);
     printf("*  Mean queueing time       = %lf sec  <--> THEORY:  %lf sec      \n", waitingTime / departures, queueing_time);
     printf("*  Mean number in system    = %lf cust <--> THEORY:  %lf cust      \n", residenceTime / prevTime, lambda * (SERV_TIME + queueing_time));
