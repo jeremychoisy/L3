@@ -2,7 +2,6 @@ function ask(str) {
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            console.log(xmlhttp.responseText);
             var listeFichier = JSON.parse(xmlhttp.responseText);
             if (document.getElementById("table") !== null){
                 document.getElementById("table").remove();
@@ -60,10 +59,21 @@ function displayFile(str){
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             console.log(xmlhttp.responseText==="");
+            console.log("test");
             var table = document.getElementById("table");
             var cmpt = document.getElementsByTagName("tr").length;
             var td = document.createElement("td");
-            td.innerText = JSON.parse(xmlhttp.responseText);
+            console.log("wtf");
+            if(str.endsWith(".png") || str.endsWith(".jpg")){
+                console.log("image");
+                var img = document.createElement("img");
+                img.setAttribute("src", str);
+                td.appendChild(img);
+            }
+            else{
+                console.log("inner");
+                td.innerText = JSON.parse(xmlhttp.responseText);
+            }
             td.setAttribute("rowspan",cmpt);
             table.firstChild.appendChild(td);
         } 
