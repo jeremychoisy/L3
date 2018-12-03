@@ -8,7 +8,7 @@ function ask(str) {
             }
             var table = document.createElement("table");
             table.setAttribute("id","table");
-            table.setAttribute("style","border:1px solid black;height:100;")
+            table.setAttribute("style","border:1px solid black;border-collapse:collapse;")
             var tr,td;
             listeFichier.forEach((item)=>{
                tr = document.createElement("tr");
@@ -25,14 +25,14 @@ function ask(str) {
                            (td));
                }
                else if(item[1] === "file")
-               {    
+               {
                    td.onclick = (
                        (function (td) {
                            return function () {
                                if (event.button <= 1) {
                                    try {
                                        displayFile(str + '/' + td.innerText);
-                                       
+
                                    } finally {
                                        event.stopPropagation();
                                        event.preventDefault();
@@ -43,8 +43,8 @@ function ask(str) {
                        })
                            (td));
                }
+               td.setAttribute("style","height:100px;border:1px solid black;");
                tr.appendChild(td);
-               tr.appendChild(document.createElement("td"));
                table.appendChild(tr);
             })
             document.body.appendChild(table);
@@ -58,25 +58,28 @@ function displayFile(str){
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            console.log(xmlhttp.responseText==="");
-            console.log("test");
             var table = document.getElementById("table");
             var cmpt = document.getElementsByTagName("tr").length;
+            if (document.getElementById("content") !== null){
+                document.getElementById("content").remove();
+            }
             var td = document.createElement("td");
-            console.log("wtf");
+            var p = document.createElement("p");
             if(str.endsWith(".png") || str.endsWith(".jpg")){
-                console.log("image");
                 var img = document.createElement("img");
                 img.setAttribute("src", str);
-                td.appendChild(img);
+                p.appendChild(img);
             }
             else{
-                console.log("inner");
-                td.innerText = JSON.parse(xmlhttp.responseText);
+                p.innerText = JSON.parse(xmlhttp.responseText);
             }
+            p.setAttribute("style","height:"+(100*cmpt) + "px;width:1000px;overflow:scroll");
+            td.appendChild(p);
+            td.setAttribute("style","width:1000px;border:1px solid black;")
+            td.setAttribute("id","content");
             td.setAttribute("rowspan",cmpt);
             table.firstChild.appendChild(td);
-        } 
+        }
     }
     xmlhttp.open("GET", "serveur.php?q=" + str, true);
     xmlhttp.send();
