@@ -64,17 +64,17 @@ function displayFile(str){
                 document.getElementById("content").remove();
             }
             var td = document.createElement("td");
-            var p = document.createElement("p");
+            var div = document.createElement("div");
             if(str.endsWith(".png") || str.endsWith(".jpg")){
                 var img = document.createElement("img");
                 img.setAttribute("src", str);
-                p.appendChild(img);
+                div.appendChild(img);
             }
             else{
-                p.innerText = JSON.parse(xmlhttp.responseText);
+                div.innerText = JSON.parse(xmlhttp.responseText);
             }
-            p.setAttribute("style","height:"+(100*cmpt) + "px;width:1000px;overflow:scroll");
-            td.appendChild(p);
+            div.setAttribute("style","height:"+(100*cmpt) + "px;width:1000px;overflow:scroll");
+            td.appendChild(div);
             td.setAttribute("style","width:1000px;border:1px solid black;")
             td.setAttribute("id","content");
             td.setAttribute("rowspan",cmpt);
