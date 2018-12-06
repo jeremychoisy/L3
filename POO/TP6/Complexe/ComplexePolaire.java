@@ -1,3 +1,5 @@
+import java.lang.Math.*;
+
 class ComplexePolaire implements IComplexe {
     private double module, argument;
 
@@ -7,11 +9,11 @@ class ComplexePolaire implements IComplexe {
     }
 
     public double reelle() {
-        return module * module * Math.cos(argument);
+        return module * Math.cos(argument);
     }
 
     public double imaginaire() {
-        return module * module * Math.sin(argument);
+        return module * Math.sin(argument);
     }
     
     public String toString(){

@@ -22,6 +22,6 @@ void print_list(node_t *head); // Print the future event list
 int popEvent(node_t **head);   // Remove the event at the front of the list
 int popBuffer(FILE *f, node_t **head, node_t **bhead,
               double *busyTime, double *residenceTime,
-              double *waitingTime, double currentTime);                 // Remove the waiting event at the front of the buffer
+              double *waitingTime, double currentTime, double SERV_TIME);                 // Remove the waiting event at the front of the buffer
 void insertEvent(node_t **head, int callerID, char event, double time); // Insert an event at the appropriate time of occurence
 void print_all(node_t *head, node_t *bhead);                            // Print both the future event list as well as the buffer

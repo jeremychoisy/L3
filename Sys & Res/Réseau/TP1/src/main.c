@@ -67,16 +67,20 @@ int main(int argc, char *argv[])
     // print_all(head,bhead);   // UNCOMMENT THIS TO VIEW THE FEL and the buffer
     while (1)
     {
+        prevTime = head->time;
         // Pickup the next event in the list
         switch (head->event)
         {
         case 'A':
             // COMPLETEZ LE CODE
-            insertEvent(&head, ++callerID, 'A', (head->time) + expntl(ARR_TIME));
+            insertEvent(&head, ++callerID, 'A', prevTime + expntl(ARR_TIME));
             if(line == 0)
             {   
                 line = 1;
-                insertEvent(&head, head->callerID, 'D', (head->time) + expntl(SERV_TIME));
+                serviceTime = expntl(SERV_TIME);
+                busyTime += serviceTime;
+                residenceTime += serviceTime;
+                insertEvent(&head, head->callerID, 'D', prevTime + serviceTime);
                 popEvent(&head);
             }
             else if(line == 1)
@@ -97,18 +101,18 @@ int main(int argc, char *argv[])
             departures++;
             line = 0;
             if(bhead != NULL){
-                popBuffer(f, &head, &bhead, &busyTime, &residenceTime, &waitingTime, (head->time));
-            }
-            prevTime = head->time;
+                line = 1;
+                popBuffer(f, &head, &bhead, &busyTime, &residenceTime, &waitingTime, prevTime, SERV_TIME);
+           }
             popEvent(&head);
             // COMPLETEZ LE CODE
+
+            printf("Departure Event\n"); // UNCOMMENT THIS TO VIEW THE FEL and the buffer
+            print_all(head,bhead);		// UNCOMMENT THIS TO VIEW THE FEL and the buffer
 
             if (departures == MAX) // Uncomment this to make use of the number of requests
                 // if(departures == callerID)	// Uncomment this to make use of the total simulation time
                 goto Result;
-
-            printf("Departure Event\n"); // UNCOMMENT THIS TO VIEW THE FEL and the buffer
-            print_all(head,bhead);		// UNCOMMENT THIS TO VIEW THE FEL and the buffer
             break;
         }
     }
