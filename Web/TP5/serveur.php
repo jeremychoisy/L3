@@ -19,4 +19,7 @@ else if(is_file($dir)){
     $content = file_get_contents($dir);
     echo json_encode($content);
 }
+else{
+    echo "Error 01";
+}
 ?>
