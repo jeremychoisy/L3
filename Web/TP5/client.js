@@ -3,6 +3,7 @@ function ask(str) {
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var listeFichier = JSON.parse(xmlhttp.responseText);
+            console.log("WTF");
             if (document.getElementById("table") !== null){
                 document.getElementById("table").remove();
             }
@@ -33,7 +34,7 @@ function ask(str) {
                                    try {
                                        displayFile(str + '/' + td.innerText);
 
-                                   } finally {
+                                    } finally {
                                        event.stopPropagation();
                                        event.preventDefault();
                                    }
@@ -46,7 +47,7 @@ function ask(str) {
                td.setAttribute("style","height:100px;border:1px solid black;");
                tr.appendChild(td);
                table.appendChild(tr);
-            })
+            });
             document.body.appendChild(table);
         }
     }
@@ -58,6 +59,7 @@ function displayFile(str){
     xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            
             var table = document.getElementById("table");
             var cmpt = document.getElementsByTagName("tr").length;
             if (document.getElementById("content") !== null){
@@ -69,6 +71,13 @@ function displayFile(str){
                 var img = document.createElement("img");
                 img.setAttribute("src", str);
                 div.appendChild(img);
+            }
+            else if(str.endsWith(".mp3") || str.endsWith(".wav")) {
+                console.log(str);
+                var audio = document.createElement("audio");
+                audio.setAttribute("src", str);
+                audio.setAttribute("controls",true);
+                div.appendChild(audio);
             }
             else{
                 div.innerText = JSON.parse(xmlhttp.responseText);
