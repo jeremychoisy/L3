@@ -11,4 +11,4 @@ clean :
 	rm *.o SED
 
 run : 
-	./SED 5 1.25 1.00
+	./SED 10000 3 2

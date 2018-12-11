@@ -96,15 +96,9 @@ int popEvent(node_t **head)
 int popBuffer(FILE *f, node_t **head, node_t **bhead, double *busyTime, double *residenceTime, double *waitingTime, double currentTime, double SERV_TIME)
 {
     double newTime, serviceTime, wt;
-    int retval = -1;
-    node_t *next_node = NULL;
 
-    if (*bhead == NULL)
-    {
-        return -1;
-    }
+
     serviceTime = expntl(SERV_TIME);
-    printf("CURRENT TIME = %lf\n", currentTime);
     insertEvent(head, (*bhead)->callerID, 'D', currentTime + serviceTime);
     // COMPLETEZ LE CODE
     // Calculating statistics
@@ -117,11 +111,8 @@ int popBuffer(FILE *f, node_t **head, node_t **bhead, double *busyTime, double *
     fprintf(f, "%d,%lf,%lf,%lf\n", (*bhead)->callerID, (*bhead)->time, wt, (serviceTime + wt));
 
     // COMPLETEZ LE CODE
-    next_node = (*bhead)->next;
-    retval = 1;
-    free(*bhead);
-    *bhead = next_node;
-    return retval;
+
+    return popEvent(bhead);
 }
 
 //******************************************************************************

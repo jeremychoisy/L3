@@ -94,21 +94,23 @@ int main(int argc, char *argv[])
                 // if(prevTime < SIM_TIME)		// Uncomment this to make use of the total simulation time
                 
                 
-                printf("Arrival Event\n");  // UNCOMMENT THIS TO VIEW THE FEL and the buffer
-                print_all(head,bhead);		// UNCOMMENT THIS TO VIEW THE FEL and the buffer
+            //    printf("Arrival Event\n");  // UNCOMMENT THIS TO VIEW THE FEL and the buffer
+            //    print_all(head,bhead);		// UNCOMMENT THIS TO VIEW THE FEL and the buffer
                 break;
         case 'D':
             departures++;
-            line = 0;
             if(bhead != NULL){
                 line = 1;
                 popBuffer(f, &head, &bhead, &busyTime, &residenceTime, &waitingTime, prevTime, SERV_TIME);
            }
+           else{
+               line = 0;
+           }
             popEvent(&head);
             // COMPLETEZ LE CODE
 
-            printf("Departure Event\n"); // UNCOMMENT THIS TO VIEW THE FEL and the buffer
-            print_all(head,bhead);		// UNCOMMENT THIS TO VIEW THE FEL and the buffer
+            //printf("Departure Event\n"); // UNCOMMENT THIS TO VIEW THE FEL and the buffer
+            //print_all(head,bhead);		// UNCOMMENT THIS TO VIEW THE FEL and the buffer
 
             if (departures == MAX) // Uncomment this to make use of the number of requests
                 // if(departures == callerID)	// Uncomment this to make use of the total simulation time
