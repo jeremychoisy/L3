@@ -2,6 +2,16 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - TestCalculatrice",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "TestCalculatrice",
+            "args": ""
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - ComplexeTest",
             "request": "launch",
             "cwd": "${workspaceFolder}",

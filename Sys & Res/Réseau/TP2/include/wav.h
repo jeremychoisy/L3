@@ -28,7 +28,7 @@ typedef struct wavfile_header_s
 #define SUBCHUNK1SIZE (16)
 #define AUDIO_FORMAT (1) /*For PCM*/
 #define NUM_CHANNELS (1) /*For mono-channel sound*/
-#define SAMPLE_RATE (44100)
+#define SAMPLE_RATE (1000)
 
 #define BITS_PER_SAMPLE (16)
 
@@ -47,3 +47,10 @@ int16_t *allocate_PCM16_buffer(int32_t FrameCount);
 size_t write_PCM16wav_data(FILE *file_p,
                            int32_t FrameCount,
                            int16_t *buffer_p);
+/* Generate a melody */
+int generate_melody(double *frequencies,
+                    double amplitude,
+                    int32_t SampleRate,
+                    int32_t FrameCount,
+                    int16_t *buffer_p,
+                    int number_of_notes);

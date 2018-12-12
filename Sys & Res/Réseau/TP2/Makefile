@@ -8,7 +8,7 @@ wav.o : ./src/wav.c
 	gcc -c ./src/wav.c -I ./include
 
 clean : 
-	rm *.o WAV
+	rm *.o *.wav *.csv WAV
 
 run : 
-	./WAV 
+	./WAV mel_fel1000Hz
