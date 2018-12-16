@@ -80,7 +80,6 @@ function displayFile(str) {
                 div.appendChild(img);
             }
             else if (str.endsWith(".mp3") || str.endsWith(".wav")) {
-                console.log(str);
                 var audio = document.createElement("audio");
                 audio.src = str;
                 audio.controls = true;
