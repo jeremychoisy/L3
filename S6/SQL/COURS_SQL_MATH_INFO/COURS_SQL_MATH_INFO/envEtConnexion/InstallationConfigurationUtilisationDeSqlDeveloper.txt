@@ -1,0 +1,187 @@
+-----------------------------------------------------------
+I. INSTALLATION DE SQLDEVELOPER
+-----------------------------------------------------------
+
+1) Télécharger sql developer depuis le site d'Oracle
+et deziper dans un répertoire 
+par exemple OracleSqlDeveloper
+
+(pour télécharger taper sur google :
+télécharger sqldeveloper Oracle
+Vous devez avoir un compte Oracle ou le créer)
+
+2)ou télécharger le Zip depuis Jalon puis deziper
+
+Si vous avez déjà le ZIP dezipé puis continuer en 3
+
+Si le sqldeveloper est déjà dezipé, aller directement en 3 en sautant 1 et 2
+
+3) Lancez le programme "sqldeveloper" en utilisant la commande ci-dessous :
+
+sqldeveloper 
+
+4) Le programme vous demande si vous voulez faire une migration. Refusez. 
+(La prochaine fois, il ne vous posera plus la question.)
+
+5) La fenêtre principale du programme "sqldeveloper" s'ouvre.
+
+
+-------------------------------------------------------------------
+II. CONNEXION AUX BASES DE DONNEES DEPUIS SQLDEVELOPER
+-------------------------------------------------------------------
+
+Cas 1 : Vous avez une base de données Oracle installée localement sur votre machine
+
+1.1) Dans le panneau de gauche, créez une nouvelle connexion 
+(en cliquant avec le bouton droit sur "Connexions").
+
+1.2) Un formulaire s'ouvre. Complétez les champs suivants, 
+et ne touchez pas aux autres :
+
+- Nom de connexion : nomDeVotreBase_AS_NomUser (exemple : ORCL_AS_MOPOLO)
+
+- Nom utilisateur : votre-identifiant-oracle (exemple MOPOLO)
+
+
+- Mot de passe : votre-mot-de-passe-oracle
+
+(Vous pouvez enregistrer le mot de passe si vous 
+le souhaitez.)
+
+- Nom d’hôte : localhost
+- Port : 1521
+
+- Nom Service : nomBase.nomDomaine (exemple : ORCL.UNICE.FR, c'est le nom complet que 
+vous avez donné à la création de la base)
+
+1.3) Cliquez sur le bouton "test" en bas de la fenêtre. 
+(Vous devez voir en bas à gauche le message : SUCCES, dans le cas contraire,
+vérifier vos paramètres précédent ou envoyé moi un mail ou appelez moi 0673212284)
+
+1.4) Si 1.3 fait avec succès, Cliquez sur le bouton "Connexion" en bas de la fenêtre. 
+(Cette connexion restera enregistrée pour la prochaine fois, il suffira 
+de la lancer dans le panneau de gauche.)
+
+1.5) Voilà ! Une fois connecté, vous pouvez taper vos requêtes dans le panneau 
+de droite et utiliser les flèches vertes pour les exécuter.
+
+
+
+
+Cas 2 : Vous n'avez pas une base de données Oracle locale à votre machine
+Vous pouvez utilisé ma machine distante disponible sur le réseau de l'UNS
+
+2.1) Dans le panneau de gauche, créez une nouvelle connexion 
+(en cliquant avec le bouton droit sur "Connexions").
+
+2.2) Un formulaire s'ouvre. Complétez les champs suivants, 
+et ne touchez pas aux autres :
+
+- Nom de connexion : PDBC12C11_AS_NomUser (exemple : PDBC12C11_AS_MOPOLO)
+
+- Nom utilisateur : votre-identifiant-oracle (exemple MOPOLO)
+
+
+- Mot de passe : votre-mot-de-passe-oracle
+
+(Vous pouvez enregistrer le mot de passe si vous 
+le souhaitez.)
+
+- Nom d’hôte : 134.59.152.116
+- Port : 443
+- Nom Service : pdbc12c11.unice.fr
+
+2.3) Cliquez sur le bouton "test" en bas de la fenêtre. 
+(Vous devez voir en bas à gauche le message : SUCCES, dans le cas contraire,
+vérifier vos paramètres précédent ou envoyé moi un mail ou appelez moi 0673212284)
+
+2.4) Si 2.3 fait avec succès, Cliquez sur le bouton "Connexion" en bas de la fenêtre. 
+(Cette connexion restera enregistrée pour la prochaine fois, il suffira 
+de la lancer dans le panneau de gauche.)
+
+2.5) Voilà ! Une fois connecté, vous pouvez taper vos requêtes dans le panneau 
+de droite et utiliser les flèches vertes pour les exécuter.
+
+
+
+Cas 3 : Vous n'avez pas une base de données Oracle locale à votre machine
+Vous ne pouvez pas utiliser ma machine distante disponible sur le réseau de l'UNS.
+Utilisé ma base appelée ORCL disponible sur le cloud Oracle.
+Cette base est accessible pendant 1 an dans le cadre du partenariat Oracle 
+jusque fin 2017.
+
+3.1) Dans le panneau de gauche, créez une nouvelle connexion 
+(en cliquant avec le bouton droit sur "Connexions").
+
+3.2) Un formulaire s'ouvre. Complétez les champs suivants, 
+et ne touchez pas aux autres :
+
+- Nom de connexion : ORCL_AS_NomUser (exemple : ORCL_AS_MOPOLO)
+
+- Nom utilisateur : votre-identifiant-oracle (exemple MOPOLO)
+
+
+- Mot de passe : votre-mot-de-passe-oracle (idem celui que je vous ai donné pour cas 2)
+
+(Vous pouvez enregistrer le mot de passe si vous 
+le souhaitez.)
+
+- Nom d’hôte : 129.152.132.118
+- Port : 1521
+- SID : ORCL
+
+3.3) Cliquez sur le bouton "test" en bas de la fenêtre. 
+(Vous devez voir en bas à gauche le message : SUCCES, dans le cas contraire,
+vérifier vos paramètres précédent ou envoyé moi un mail ou appelez moi 0673212284)
+
+3.4) Si 1.3 fait avec succès, Cliquez sur le bouton "Connexion" en bas de la fenêtre. 
+(Cette connexion restera enregistrée pour la prochaine fois, il suffira 
+de la lancer dans le panneau de gauche.)
+
+3.5) Voilà ! Une fois connecté, vous pouvez taper vos requêtes dans le panneau 
+de droite et utiliser les flèches vertes pour les exécuter.
+
+
+
+-------------------------------------------------------------------
+III. PRISE EN MAIN DE L'ENVIRONNEMENT UNE FOIS CONNECTE
+QUELQUE SOIT LE CAS 1, 2 ou 3.
+-------------------------------------------------------------------
+
+
+1) une fois connecté
+vous avez à gauche la base de navigation des objets, organisé par connexion
+à droite en haut, vous avez la zone d'exécution des commandes
+En bas la zone des résultats et des erreurs.
+
+2) Exécuter le script airbase pour obtenir vos tables
+@...\COURS_SQL_MATH\Scripts\airbase
+
+3) Vérifier l'existance des tables :
+
+-- liste de vos tables
+select * from tab;
+
+-- s'il y a des noms de tables incompréhensible, videz la corbeille comme suit :
+purge recyclebin;
+
+-- vérifier la structure de chaque table
+describe pilote;
+
+describe avion;
+
+describe vol;
+
+-- consulter les lignes
+
+select * from pilote;
+select * from avion;
+select * from vol;
+
+
+3) Vous êtes prêts pour travailler
+
+
+
+
+

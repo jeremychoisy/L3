@@ -116,7 +116,7 @@ int generate_melody(double *frequencies,
     }*/
     k = 0;
     for(int i =0;i<number_of_notes;i++){
-        while(k < ((FrameCount/number_of_notes)*i))
+        while(k < ((FrameCount/number_of_notes)*(i+1)))
         {
             wave = (int16_t)(amplitude * sin(k * frequencies[i] * 2.0 * M_PI / SampleRate_d));
             buffer_p[k] = wave;
@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
         goto error2;
     }
 
-   ret = quantification4bits( buffer_p, FrameCount);
+    ret = quantification4bits( buffer_p, FrameCount);
         if (ret < 0)
     {
         perror("quantification4bits failed in main");

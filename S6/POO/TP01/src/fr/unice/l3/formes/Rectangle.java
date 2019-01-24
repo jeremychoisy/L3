@@ -24,8 +24,8 @@ public class Rectangle extends AFormeGeometrique {
 		super.paintComponent(g);
 		/*getAncrage().paintComponent(g);
 		Point coin = super.getCoinSuperieurGauche() ;*/
-		System.out.println(g.toString());
 		g.setColor(Color.RED);
+		//g.drawRect(coin.getX(), coin.getY(), super.getHauteur(), super.getLargeur());
 		g.drawRect(0, 0, 50, 50);
 		}
 	
