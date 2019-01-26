@@ -2,6 +2,7 @@ package fr.unice.l3.formes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Rectangle extends AFormeGeometrique {
 	public Rectangle(Point coin, int largeur, int hauteur) {
@@ -22,11 +23,8 @@ public class Rectangle extends AFormeGeometrique {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		/*getAncrage().paintComponent(g);
-		Point coin = super.getCoinSuperieurGauche() ;*/
-		g.setColor(Color.RED);
-		//g.drawRect(coin.getX(), coin.getY(), super.getHauteur(), super.getLargeur());
-		g.drawRect(0, 0, 50, 50);
+		Point coin = getCoinSuperieurGauche() ;
+		g.drawRect(coin.getX(),coin.getY(), getLargeur(), getHauteur());
 		}
 	
 	@Override
