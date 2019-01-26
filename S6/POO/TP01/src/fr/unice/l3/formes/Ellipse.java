@@ -20,7 +20,6 @@ public class Ellipse extends AFormeGeometrique {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		getCentre().paintComponent(g);
 		Point coin = getCoinSuperieurGauche() ;
 		g.drawOval(coin.getX(), coin.getY(), getLargeur(), getHauteur());
 	}

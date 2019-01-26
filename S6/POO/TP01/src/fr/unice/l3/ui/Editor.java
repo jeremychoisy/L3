@@ -40,12 +40,15 @@ public class Editor extends JFrame {
 		rectangle.addActionListener(actionListener);
 		ellipse.addActionListener(actionListener);
 		couleur.addActionListener(actionListenerColor);
+		drawingArea.addMouseListener(actionListener);
+		drawingArea.addMouseMotionListener(actionListener);
 		
 		toolbox.add(rectangle);
 		toolbox.add(ellipse);
 		toolbox.add(couleur);
 		toolbox.add(Box.createVerticalBox());
 		toolbox.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1,Color.BLACK));
+		
 		
 
 		this.add(toolbox,BorderLayout.WEST);

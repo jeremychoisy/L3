@@ -25,8 +25,16 @@ abstract class AFormeGeometrique extends JComponent {
 	
 	abstract double surface();
 	abstract double perimetre();
-	final int getLargeur() { return this.largeur; }
-	final int getHauteur() { return this.hauteur; }
+	final public int getLargeur() { return this.largeur; }
+	final public int getHauteur() { return this.hauteur; }
+	
+	final public void setLargeur(int largeur) {
+		this.largeur = largeur;
+	}
+	
+	final public void setHauteur(int hauteur) {
+		this.hauteur = hauteur;
+	}
 	
 	final Point getCoinSuperieurGauche() {
 		int x = horizontal.adapt(ancrage.getX(), getLargeur());

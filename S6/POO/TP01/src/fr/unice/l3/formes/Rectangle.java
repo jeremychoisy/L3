@@ -1,8 +1,6 @@
 package fr.unice.l3.formes;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 public class Rectangle extends AFormeGeometrique {
 	public Rectangle(Point coin, int largeur, int hauteur) {
