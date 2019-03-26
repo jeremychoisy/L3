@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Allumettes</string>
+    <string name="button_text">Jouer !</string>
+    <string name="item_reglages">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
