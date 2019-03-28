@@ -1,9 +1,3 @@
-/*--------------------------------------------------
-   Version 0 d'un échange SHM System V entre deux fils.
-    Les semaphores utilisés sont POSIX !
-
-    Author : GM
- ----------------------------------------------------*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,11 +7,11 @@
 #include <sys/stat.h>
 #include <sys/ipc.h>
 #include <sys/types.h>
-#include <sys/sem.h>
-#include <semaphore.h>
-#include <sys/shm.h>
 #include <time.h>
+
 #define BUF_SIZE 256
+#define READ_END 0
+#define WRITE_END 1
 
 void make_message(int num, char *message){
   char buftime [26];
@@ -31,28 +25,21 @@ void make_message(int num, char *message){
 
 int main(int argc, char *argv[]){
   int i;
-  char *virtualaddr;
-  int shmid;
-  sem_t *s_get,*s_put;
-  key_t key;
-  
-  /*----- Attaching the shared mem to my address space  */
-  key = ftok(argv[0],'R'); /* Generation de la key */
-  shmid = shmget(key, 1024, 0644|IPC_CREAT); /* Creation du segment
-                                                memoire : 1024 octets */
-  if (0 > shmid){
-    perror("Shared Mem creation error\n");
-    exit(1);  
+
+  int fd_1[2];
+  int fd_2[2];
+
+
+  if(pipe(fd_1) == -1){
+    fprintf(stderr, " Pipe ␣ failed ");
+    return 1;
   }
-  /* => virtualaddr will be available across fork ! */
-  virtualaddr = shmat(shmid, (void*)0, 0); /* Attachement à l'espace mem du processus */
-  sem_unlink ("/put");
-  sem_unlink ("/get");
-  /*--- Create POSIX Named Semaphores, and initialising with 1 */
-  int init_sem_value = 0; /* Dijkstra sem */
-  s_put = sem_open("/put", O_CREAT|O_RDWR, 0644, init_sem_value);
-  s_get = sem_open("/get", O_CREAT|O_RDWR, 0644, init_sem_value);
-  
+
+  if(pipe(fd_2) == -1){
+    fprintf(stderr, " Pipe ␣ failed ");
+  return 1;
+  }
+
   switch (fork()){ /*----- child 1 */
   case -1:
     printf("Error forking child 1!\n");  exit(1);
@@ -60,27 +47,30 @@ int main(int argc, char *argv[]){
     {
       char buf[BUF_SIZE];
 
-      /* Referring the semaphore */
-      s_put = sem_open ("/put", O_RDWR);
-      s_get = sem_open ("/get", O_RDWR);
+
 
       printf("\nChild 1 executing...\n");
 
-      for(int i=0;i<2;i++){
+      close(fd_1[READ_END]);
+      close(fd_2[WRITE_END]);
+
+      for(int i=0;i<10;i++){
           /*Child 1 writing in shared mem */
           make_message(1,buf);
           sleep(1); /* La fabrication du message prend un peu de temps */
-          strcpy (virtualaddr, buf);
+          write(fd_1[WRITE_END],buf,BUF_SIZE);
           printf("Message sent by child 1: %s\n", buf);
-          sem_post(s_get);
-          /* Child 1 finit d'écrire, il sem_post le s_get et attend le s_put */
-          sem_wait(s_put);
+
           /*Child 1 reading from shared mem */
-          strcpy (buf, virtualaddr);
+          read(fd_2[READ_END],buf,BUF_SIZE);
           printf("Message received by child 1: %s\n", buf);
       }
+
+      close(fd_2[READ_END]);
+      close(fd_1[WRITE_END]);
+
       /*printf("Exiting child 1...\n"); */
-      _exit(0);    
+      _exit(0);
     }
     break;
   default: break;
@@ -88,7 +78,7 @@ int main(int argc, char *argv[]){
 
 
 
-  
+
   switch (fork()){ /*----- child 2 */
   case -1:
     printf("Error forking child 2!\n"); exit(1);
@@ -96,37 +86,37 @@ int main(int argc, char *argv[]){
     {
       char buf[BUF_SIZE];
 
-      /* Referring the semaphore */
-      s_put = sem_open ("/put", O_RDWR);
-      s_get = sem_open ("/get", O_RDWR);
-
       printf("\nChild 2 executing...\n");
 
+      close(fd_2[READ_END]);
+      close(fd_1[WRITE_END]);
+
       /*Child 2 reading from shared memory*/
-      for(int i=0;i<2;i++){
-          sem_wait(s_get);
-          strcpy (buf, virtualaddr);
+      for(int i=0;i<10;i++){
+          read(fd_1[READ_END],buf,BUF_SIZE);
           printf("Message received by child 2: %s\n", buf);
-          memset(buf,0,256);
+
           /*Child 2 writing in shared mem*/
           make_message(2,buf);
           sleep(1); /* La fabrication du message prend un peu de temps*/
-          strcpy (virtualaddr, buf);
+          write(fd_2[WRITE_END],buf,BUF_SIZE);
           printf("Message sent by child 2: %s\n", buf);;
-          sem_post(s_put);
       }
+
+      close(fd_1[READ_END]);
+      close(fd_2[WRITE_END]);
       /*printf("Exiting child 2...\n");*/
       _exit(EXIT_SUCCESS);
     }
-    break;  
+    break;
   default:
     break;
   }
 
 
 
-  
-  
+
+
   printf("Parent waiting for children completion...\n");
   for(i=0;i<2;i++){
     if (wait(NULL) == -1){
@@ -136,12 +126,10 @@ int main(int argc, char *argv[]){
   }
   printf("Parent finishing.\n");
 
-  //Deleting semaphores..
-  sem_unlink ("/put");
-  sem_unlink ("/get");
-
-  //Deleting Shared Memory.
-  shmctl (shmid, IPC_RMID, NULL);
+  close(fd_1[READ_END]);
+  close(fd_2[WRITE_END]);
+  close(fd_2[READ_END]);
+  close(fd_1[WRITE_END]);
   exit(EXIT_SUCCESS);
 
 }
