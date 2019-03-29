@@ -1,6 +1,6 @@
-/** Fichier : inc.c (Communication Sockets/UDP)
- *   Les deux processus distants s'envoient un nombre qu'ils
- *   incrementent successivement : L'un compte en pair, l'autre en impair ...  */
+/** Fichier : client.c (Communication Sockets/UDP)
+ *   Ce processus envoie un nombre à un processus distant qui l'incrémente
+ *   et lui renvoie ...  */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -17,11 +17,10 @@ int main(int argc, char *argv[]){
   socklen_t ls = sizeof(struct sockaddr_in); /* Taille des adresses */
   /*---- Caracterisation de la socket d'émission ----------*/
   int sd0;                 /* Descripteur  */
-  int ps0 = 5001;    /* Port         */
+  int ps0 = 0;    /* Port         */
   struct sockaddr_in adr0, *padr0 = &adr0; /* Adresse  */
   /*---- Caracterisation de la socket distante ------*/
   struct sockaddr_in adr1,*padr1 = &adr1;  /* Adresse du destinataire */
-  struct hostent *hp1;       /* Adresse IP de la machine distante */
   /*---- Buffers pour Messages -------------------------------*/
   char msg_in[3] = "0";      /* Message recu de "0" a "99" */
   char msg_out[3] = "0";    /* Message a envoyer "0" a "99" */
@@ -53,23 +52,17 @@ int main(int argc, char *argv[]){
   getsockname(sd0,(struct sockaddr *)padr0,&ls);
   /* 2) Concernant la socket de destination ================*/
   /* a) A partir du nom du destinataire */
-  hp1=gethostbyname(argv[1]);
-  if(hp1 == NULL){
-    fprintf(stderr,"machine %s inconnue\n",argv[1]);
-    exit(2);
-  }
-  else{ /* Recuperation de l'adresse IP */
-    memcpy(&adr1.sin_addr.s_addr, hp1->h_addr, hp1->h_length);
+/* Recuperation de l'adresse IP */
+    inet_aton(argv[1],&(adr1.sin_addr));
     adr1.sin_family = AF_INET;
-    adr1.sin_port   = htons(ps0); /* Meme port que sd0 : why not ? */
-    fprintf(stdout,"machine %s --> %s \n", hp1->h_name, inet_ntoa(adr1.sin_addr));
-  }
+    adr1.sin_port   = htons(5001); /* Meme port que sd0 : why not ? */
+    fprintf(stdout,"machine --> %s \n", inet_ntoa(adr1.sin_addr));
+
   /* 3) Boucle emission-reception
      a particulariser selon que l'on est le serveur ou le client ..*/
+  printf("\n**********CLIENT***********\n");
   for(;;) {
     int i;
-    struct sockaddr_in adr2,  *padr2 = &adr2;
-    printf("\n------------------\n");
     /* a) Emission */
     printf("\n\nEnvoi(%d) ... ", looptime);
     if (sendto(sd0,msg_out,sizeof(msg_out),0,(struct sockaddr *)padr1,ls) >0)
@@ -82,11 +75,10 @@ int main(int argc, char *argv[]){
       printf("inachevee : %s !\n",msg_in);
     else  {
       printf("terminee : valeur = %s !\n",msg_in);
-      /* c) Traitement : La reception est bonne, on fait evoluer i */
       i = atoi(msg_in);
-      i = (i+1)%100;
       sprintf(msg_out,"%d",i);
     }
+    printf("\n\t------------------\n");
     sleep(1);
     looptime++;
   }
