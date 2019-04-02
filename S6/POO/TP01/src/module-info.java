@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author chois
+ * @author choisy
  *
  */
 module tp01Swing {
