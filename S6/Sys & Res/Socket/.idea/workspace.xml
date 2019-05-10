@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07833399-4491-4714-8962-11c1a4b6c970" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/TP3/.idea/TP3.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TP3/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TP3/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TP3/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TP3/src/client.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TP3/src/server.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,18 +15,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TP4/src/client.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" column="3" lean-forward="true" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
-            </state>
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TP4/src/serveur.c">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="359">
+              <caret line="28" column="21" lean-forward="true" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -83,24 +77,12 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="Socket" type="b2602c69:ProjectViewProjectNode" />
               <item name="Socket" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Socket" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Socket" type="462c0819:PsiDirectoryNode" />
-              <item name="TP3" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Socket" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Socket" type="462c0819:PsiDirectoryNode" />
-              <item name="TP3" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Socket" type="b2602c69:ProjectViewProjectNode" />
@@ -117,6 +99,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -124,7 +107,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553866036241" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Seven Wonders" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -166,16 +149,17 @@
       <workItem from="1554987211127" duration="1532000" />
       <workItem from="1555678023321" duration="177000" />
       <workItem from="1555678288158" duration="1207000" />
+      <workItem from="1556098929507" duration="1815000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40033000" />
+    <option name="totallyTimeSpent" value="41848000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2910902" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29424307" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -193,7 +177,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.22030237" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.219935" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -234,7 +218,7 @@
     <entry file="file://$PROJECT_DIR$/TP2/src/getnameinfo.c" />
     <entry file="file://$PROJECT_DIR$/TP2/src/getservbyname.c" />
     <entry file="file://$PROJECT_DIR$/TP2/src/getservbyport.c" />
-    <entry file="file://$PROJECT_DIR$/TP2/src/server.C" />
+    <entry file="file://$PROJECT_DIR$/TP2/src/server.c" />
     <entry file="file://$PROJECT_DIR$/TP2/src/create_socket.c">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -284,14 +268,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TP4/src/client.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="3" lean-forward="true" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/TP4/src/serveur.c">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="28" column="21" lean-forward="true" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
